@@ -1,0 +1,124 @@
+.wrap {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  min-height: 600px;
+  .media_panel {
+    display: flex;
+    justify-content: center;
+    background: #fff;
+    border-radius: 3px;
+    border: 1px;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    padding: 15px;
+    font-weight: 700px;
+  }
+  .card_panel {
+    margin-bottom: 15px;
+    .card_icon {
+      padding: 20px 15px;
+      text-align: center;
+      .icon {
+        font-size: 60px;
+      }
+    }
+    .card_text {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 15px;
+      color: #666;
+      font-weight: bold;
+      background: #F5F5F5;
+      border-top: 1px solid #E9E9E9;
+    }
+  }
+  .suggest_topics_panel {
+    margin-bottom: 15px;
+    border-radius: 3px;
+    border: 1px;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+    .panel_header,
+    .panel_footer {
+      background: #fafafa;
+      padding: 6px 15px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #777;
+    }
+    .panel_header {
+      border-bottom-color: #eee;
+      border-bottom: 1px solid transparent;
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+    }
+    .panel_footer {
+      text-decoration: none;
+      border-bottom-left-radius: 3px;
+      border-bottom-right-radius: 3px;
+    }
+    .main {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+}
+
+.topic {
+  display: flex;
+  min-height: 68px;
+  border-bottom: 1px solid #F0F0F0;
+  padding: 10px 15px;
+  width: 50%;
+  .topic_avatar {
+    padding-right: 10px;
+  }
+  .topic_infos {
+    display: flex;
+    flex-direction: column;
+    .title {
+      overflow: hidden;
+      height: 30px;
+      color: #222;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 30px;
+      text-decoration: none;
+      .a_style {
+        font-weight: 400;
+        line-height: 30px;
+        color: #222;
+      }
+      .topic_node {
+        color: #777;
+        margin-right: 3px;
+      }
+    }
+    .topic_info {
+      display: flex;
+    }
+  }
+  .topic_replies_count {
+    margin-left: auto;
+    align-self: center;
+    .span_count {
+      min-width: 32px;
+      display: inline-block;
+      background: #CFD3E6;
+      text-align: center;
+      color: #fff;
+      line-height: 11px;
+      border-radius: 80px;
+      padding: 3px 8px 3px 8px;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .topic {
+    width: 100%;
+  }
+}
