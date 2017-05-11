@@ -13,6 +13,8 @@ const app = dva({
   },
 });
 
+app.model(require("./models/app"));
+
 // 2. Plugins
 // app.use({});
 

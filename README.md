@@ -1,5 +1,9 @@
 # SF
 
+## 主题名称
+
+ReQS，取自 Request、 Response
+
 ## 构建过程
 
 ### step 1
@@ -20,13 +24,23 @@
 修改roadhog版本
 `cnpm install roadhog@0.6.0-beta.6 --save-dev`
 
-### step 4
+### step 4 基础设施
 
-#### 基础设施
+#### Ajax请求封装
 
-##### Ajax请求封装
+我们使用`axios`作为我们ajax库
 
-我们使用axios作为我们ajax库
+
+### step 5 路由设置
+
+根据我们项目的设计，结构为
+
+```HTML
+header
+main
+footer
+```
+
 
 
 
