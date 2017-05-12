@@ -58,8 +58,8 @@ function Home() {
           <div className={styles.media_panel}>
             <h4>
               欢迎加入ReQS知识问答社区，向世界分享你的见解~
-              <a href="/register"><Button size="large" type="primary" style={{ marginLeft: '10px' }}>立即注册</Button></a>
-              <a href="/login"><Button size="large" style={{ marginLeft: '10px' }} >用户登录</Button></a>
+              <Link to="/register"><Button size="large" type="primary" style={{ marginLeft: '10px' }}>立即注册</Button></Link>
+              <Link to="/login"><Button size="large" style={{ marginLeft: '10px' }} >用户登录</Button></Link>
             </h4>
           </div>
         )

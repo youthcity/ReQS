@@ -62,7 +62,9 @@ module.exports = {
     res.json(response);
   },
   [`POST ${apiPrefix}/user/signup`]: (req, res) => {
+    console.log('=====');
     setTimeout(() => {
+      console.log(req.body);
       const { username, password } = req.body;
       if (username && password) {
         adminUsers.push({

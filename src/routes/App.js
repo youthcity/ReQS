@@ -11,9 +11,9 @@ const { Header, Content, Footer } = Layout;
 
 function App({ children }) {
   return (
-    <Layout className="layout">
+    <Layout className={styles.layout}>
       <Mheader />
-      <Content style={{ padding: '0 50px' }}>
+      <Content className={styles.main}>
         {children}
       </Content>
       <Footer style={{ textAlign: 'center' }}>

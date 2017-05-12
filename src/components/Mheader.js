@@ -11,7 +11,7 @@ const { Header } = Layout;
 
 function Mheader() {
   const user = {};
-
+  const isLogin = false;
   const handleLogout = () => {
     console.log('handleLogout');
   };
@@ -26,7 +26,7 @@ function Mheader() {
       <Menu.Item key="2">发布招聘</Menu.Item>
       <Menu.Item key="3">草稿箱</Menu.Item>
     </Menu>
-);
+  );
 
   const userDropMenu = (
     <Menu>
@@ -70,32 +70,48 @@ function Mheader() {
           </Menu>
         </div>
         <div className={styles.right}>
-          <ul className={styles.list_wrap}>
-            <li className={styles.item}>
-              <Search
-                placeholder="input search text"
-                style={{ width: 150 }}
-                size="large"
-                onSearch={value => console.log(value)}
-              />
-            </li>
-            <li className={styles.item}>
-              <Dropdown overlay={dropdownMenu}>
-                <Button style={{ marginLeft: 8 }}>
-                  <Icon type="plus" className={styles.icon} style={{ fontSize: '16px', paddingRight: '5px' }} /><Icon className={styles.icon} type="down" />
-                </Button>
-              </Dropdown>
-            </li>
-            <li className={styles.item}>
-              <Link to="/notifications" ><Icon className={styles.icon} type="bell" /></Link>
-            </li>
-            <li className={styles.item}>
-              <Dropdown overlay={userDropMenu}>
-                <a className={styles.user_avatar} href="javascript:;" />
-              </Dropdown>
-            </li>
-          </ul>
-
+          {
+            isLogin
+              ? (
+                <ul className={styles.list_wrap}>
+                  <li className={styles.item}>
+                    <Search
+                      placeholder="input search text"
+                      style={{ width: 150 }}
+                      size="large"
+                      onSearch={value => console.log(value)}
+                    />
+                  </li>
+                  <li className={styles.item}>
+                    <Dropdown overlay={dropdownMenu}>
+                      <Button style={{ marginLeft: 8 }}>
+                        <Icon type="plus" className={styles.icon} style={{ fontSize: '16px', paddingRight: '5px' }} /><Icon className={styles.icon} type="down" />
+                      </Button>
+                    </Dropdown>
+                  </li>
+                  <li className={styles.item}>
+                    <Link to="/notifications" ><Icon className={styles.icon} type="bell" /></Link>
+                  </li>
+                  <li className={styles.item}>
+                    <Dropdown overlay={userDropMenu}>
+                      <a className={styles.user_avatar} href="javascript:;" />
+                    </Dropdown>
+                  </li>
+                </ul>
+              )
+              : (
+                <ul className={styles.list_wrap}>
+                  <li className={styles.item}>
+                    <Search
+                      placeholder="input search text"
+                      style={{ width: 150 }}
+                      size="large"
+                      onSearch={value => console.log(value)}
+                    />
+                  </li>
+                </ul>
+              )
+          }
         </div>
       </div>
     </Header>

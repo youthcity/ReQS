@@ -1,7 +1,9 @@
 
 export default {
   namespace: 'app',
-  state: {},
+  state: {
+    user: {},
+  },
   reducers: {},
   effects: {},
   subscriptions: {},
