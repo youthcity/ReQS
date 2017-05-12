@@ -109,6 +109,16 @@ function Mheader() {
                       onSearch={value => console.log(value)}
                     />
                   </li>
+                  <li className={styles.item}>
+                    <Button.Group >
+                      <Link to="/register">
+                        <Button size="large" type="primary">注册</Button>
+                      </Link>
+                      <Link to="/login">
+                        <Button size="large" type="primary">登录</Button>
+                      </Link>
+                    </Button.Group>
+                  </li>
                 </ul>
               )
           }
