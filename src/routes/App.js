@@ -1,18 +1,60 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Form } from 'antd';
 
 
 import styles from './App.less';
 import Mheader from '../components/Mheader';
 // import Footer from '../components/Footer';
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
-function App({ children }) {
+function App({ children, form, app, dispatch, location }) {
+  const { loginModalVisible, confirmLoading } = app;
+  const { validateFieldsAndScroll } = form;
+
+  const headerProps = {
+    app,
+    location,
+    loginModalVisible,
+    confirmLoading,
+    form,
+    dispatch,
+    showModal() {
+      dispatch({
+        type: 'app/showLoginModal',
+      });
+    },
+    handleOk() {
+      validateFieldsAndScroll((errors, values) => {
+        if (errors) {
+          return;
+        }
+        console.log(values);
+        dispatch({
+          type: 'app/login',
+          payload: values,
+        });
+      });
+    },
+    handleCancel() {
+      console.log('Clicked cancel button');
+      dispatch({
+        type: 'app/hideLoginModal',
+      });
+    },
+    handleLogout() {
+      dispatch({
+        type: 'app/logout',
+      });
+    },
+  };
+
   return (
     <Layout className={styles.layout}>
-      <Mheader />
+      <Mheader
+        {...headerProps}
+      />
       <Content className={styles.main}>
         {children}
       </Content>
@@ -23,8 +65,8 @@ function App({ children }) {
   );
 }
 
-function mapStateToProps() {
-  return {};
+function mapStateToProps({ app }) {
+  return { app };
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(Form.create()(App));

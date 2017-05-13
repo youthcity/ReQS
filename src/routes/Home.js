@@ -10,8 +10,13 @@ import styles from './Home.less';
 moment.locale('zh-CN');
 const data = require('../assets/data.json').topics;
 
-function Home() {
+function Home({ dispatch }) {
   const isLogin = false;
+  const showLoginModal = () => {
+    dispatch({
+      type: 'app/showLoginModal',
+    });
+  };
 
   const getTopicItems = () => {
     return data.map((item, key) => {
@@ -59,7 +64,7 @@ function Home() {
             <h4>
               欢迎加入ReQS知识问答社区，向世界分享你的见解~
               <Link to="/register"><Button size="large" type="primary" style={{ marginLeft: '10px' }}>立即注册</Button></Link>
-              <Link to="/login"><Button size="large" style={{ marginLeft: '10px' }} >用户登录</Button></Link>
+              <Button onClick={showLoginModal} size="large" style={{ marginLeft: '10px' }} >用户登录</Button>
             </h4>
           </div>
         )

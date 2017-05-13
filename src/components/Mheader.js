@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Menu, Icon, Form, Modal, Dropdown, Button, Input } from 'antd';
+import { Layout, Menu, Icon, Form, Modal, Dropdown, Button, Input, Checkbox } from 'antd';
 import { Link } from 'dva/router';
 import cx from 'classnames';
 
@@ -9,15 +9,16 @@ const FormItem = Form.Item;
 const Search = Input.Search;
 const { Header } = Layout;
 
-function Mheader() {
+function Mheader({ location, dispatch, app,
+   loginModalVisible, confirmLoading, showModal, handleOk, handleCancel, form, handleLogout }) {
   const user = {};
   const isLogin = false;
-  const handleLogout = () => {
-    console.log('handleLogout');
-  };
 
-  const showModal = () => {
-    console.log('showModal');
+  const { getFieldDecorator } = form;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleOk();
   };
 
   const dropdownMenu = (
@@ -114,9 +115,48 @@ function Mheader() {
                       <Link to="/register">
                         <Button size="large" type="primary">注册</Button>
                       </Link>
-                      <Link to="/login">
-                        <Button size="large" type="primary">登录</Button>
-                      </Link>
+                      <Button onClick={showModal} size="large" type="primary">登录</Button>
+                      <div>
+                        <Modal
+                          title="登录"
+                          visible={loginModalVisible}
+                          onOk={handleOk}
+                          confirmLoading={confirmLoading}
+                          onCancel={handleCancel}
+                          footer={null}
+                          width="380px"
+                        >
+                          <Form onSubmit={handleSubmit} className={styles.login_form}>
+                            <FormItem hasFeedback>
+                              {getFieldDecorator('username', {
+                                rules: [{ required: true, message: '请填写用户名' }],
+                              })(
+                                <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Username" />,
+                              )}
+                            </FormItem>
+                            <FormItem hasFeedback>
+                              {getFieldDecorator('password', {
+                                rules: [{ required: true, message: '请填写密码' }],
+                              })(
+                                <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Password" />,
+                              )}
+                            </FormItem>
+                            <FormItem>
+                              {getFieldDecorator('remember', {
+                                valuePropName: 'checked',
+                                initialValue: true,
+                              })(
+                                <Checkbox>记住登录状态</Checkbox>,
+                              )}
+                              {/* <a className="login-form-forgot" href="">Forgot password</a>*/}
+                              <Button type="primary" htmlType="submit" loading={confirmLoading} className={styles.login_form_button}>
+                                登录
+                              </Button>
+                              Or <a href="/register">立即注册!</a>
+                            </FormItem>
+                          </Form>
+                        </Modal>
+                      </div>
                     </Button.Group>
                   </li>
                 </ul>
