@@ -11,8 +11,7 @@ const { Header } = Layout;
 
 function Mheader({ location, dispatch, app,
    loginModalVisible, confirmLoading, showModal, handleOk, handleCancel, form, handleLogout }) {
-  const user = {};
-  const isLogin = false;
+  const { user, isLogin } = app;
 
   const { getFieldDecorator } = form;
 
@@ -23,7 +22,7 @@ function Mheader({ location, dispatch, app,
 
   const dropdownMenu = (
     <Menu onClick={() => { console.log('dropdownMenu'); }}>
-      <Menu.Item key="1">提问</Menu.Item>
+      <Menu.Item key="1"><Link to="/ask">提问</Link></Menu.Item>
       <Menu.Item key="2">发布招聘</Menu.Item>
       <Menu.Item key="3">草稿箱</Menu.Item>
     </Menu>
@@ -60,7 +59,7 @@ function Mheader({ location, dispatch, app,
           </h1>
           <Menu
             mode="horizontal"
-            style={{ lineHeight: '60px', fontSize: '16px', fontWeight: '400' }}
+            style={{ lineHeight: '60px', fontSize: '14px', fontWeight: '400' }}
           >
             <Menu.Item key="1"><Link to="/">首页</Link></Menu.Item>
             <Menu.Item key="2"><Link to="/">问答</Link></Menu.Item>
@@ -75,7 +74,7 @@ function Mheader({ location, dispatch, app,
             isLogin
               ? (
                 <ul className={styles.list_wrap}>
-                  <li className={styles.item}>
+                  <li className={cx(styles.item, styles.search)}>
                     <Search
                       placeholder="input search text"
                       style={{ width: 150 }}
@@ -95,14 +94,18 @@ function Mheader({ location, dispatch, app,
                   </li>
                   <li className={styles.item}>
                     <Dropdown overlay={userDropMenu}>
-                      <a className={styles.user_avatar} href="javascript:;" />
+                      <a
+                        className={styles.user_avatar}
+                        href="javascript:;"
+                        style={{ backgroundImage: `url(${user.avatar})` }}
+                      />
                     </Dropdown>
                   </li>
                 </ul>
               )
               : (
                 <ul className={styles.list_wrap}>
-                  <li className={styles.item}>
+                  <li className={cx(styles.item, styles.search)}>
                     <Search
                       placeholder="input search text"
                       style={{ width: 150 }}

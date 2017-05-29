@@ -11,9 +11,7 @@
     padding-left: 15px;
     padding-right: 15px;
     margin-left: auto;
-    margin-right: auto;
-    // width: 1140px;
-
+    margin-right: auto; // width: 1140px;
     .left {
       display: flex;
       .logo {
@@ -24,22 +22,24 @@
         text-indent: -9999px;
       }
     }
-
     .right {
       display: flex;
       align-items: center;
       .list_wrap {
         display: flex;
         line-height: 30px;
+        @media only screen and (max-width:960px) {
+          .search {
+            display: none;
+          }
+        }
         .item {
           margin-right: 5px;
           padding: 0 13px;
-
           .icon {
             font-size: 16px;
             color: #666;
           }
-
           .user_avatar {
             display: block;
             width: 30px;
@@ -50,17 +50,14 @@
           }
         }
       }
-
-
-
     }
   }
 }
 
-
 .login_form {
   max-width: 380px;
 }
+
 .login_form_button {
   width: 100%;
 }

@@ -2,7 +2,7 @@ import { request } from '../utils';
 
 export async function login(params) {
   return request({
-    url: '/api/user/login',
+    url: '/user/signin',
     method: 'post',
     data: params,
   });
@@ -10,7 +10,7 @@ export async function login(params) {
 
 export async function logout(params) {
   return request({
-    url: '/api/user/logout',
+    url: '/user/logout',
     method: 'get',
     data: params,
   });
@@ -18,8 +18,9 @@ export async function logout(params) {
 
 export async function getUserInfo(params) {
   return request({
-    url: '/api/userInfo',
+    url: '/user/userInfo',
     method: 'get',
     data: params,
+    withCredentials: true,
   });
 }

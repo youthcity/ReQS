@@ -4,24 +4,28 @@ import _ from 'lodash';
 
 axios.defaults.timeout = 5000;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-// axios.defaults.baseURL = 'http://xxx.xxx.com';
+axios.defaults.baseURL = 'http://localhost:3000';
 
 const fetch = (options) => {
   const {
     method = 'get',
     data,
     url,
+    withCredentials,
   } = options;
 
   switch (method.toLowerCase()) {
     case 'get':
-      return axios.get(`${url}${!_.isEmpty(data) ? `?${qs.stringify(data)}` : ''}`);
+      console.log(withCredentials);
+      return axios.get(`${url}${!_.isEmpty(data) ? `?${qs.stringify(data)}` : ''}`, {
+        withCredentials,
+      });
     case 'delete':
       return axios.delete(url, { data });
     case 'head':
       return axios.head(url, data);
     case 'post':
-      return axios.post(url, data);
+      return axios.post(url, data, { withCredentials });
     case 'put':
       return axios.put(url, data);
     case 'patch':

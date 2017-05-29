@@ -5,6 +5,7 @@ export default {
   namespace: 'app',
   state: {
     user: {},
+    isLogin: false,
     loginModalVisible: false,
     confirmLoading: false,
   },
@@ -37,6 +38,7 @@ export default {
       return {
         ...state,
         user,
+        isLogin: true,
       };
     },
   },
@@ -73,6 +75,7 @@ export default {
     },
     *queryUser({ payload }, { call, put }) {
       const data = yield call(getUserInfo, payload);
+      console.log(data);
       if (data.success && data.user) {
         yield put({
           type: 'queryUserSuccess',
