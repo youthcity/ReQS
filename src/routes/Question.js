@@ -100,7 +100,14 @@ function Question() {
               {get_replies()}
             </Card>
           </div>
-
+          <Card className={styles.answer_editor} title="撰写答案">
+            <div className={styles.editor_wrap}>
+              <p>3ssss</p>
+            </div>
+            <div className={styles.btn_wrap}>
+              <Button className={styles.submit_btn} type="primary" size="large" >提交答案</Button>
+            </div>
+          </Card>
         </Col>
         <Col className={styles.right} span={6}>
           <Card style={{ width: 240 }} bodyStyle={{ padding: '20px' }}>
