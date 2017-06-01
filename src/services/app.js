@@ -5,6 +5,7 @@ export async function login(params) {
     url: '/user/signin',
     method: 'post',
     data: params,
+    withCredentials: true,
   });
 }
 
@@ -13,6 +14,7 @@ export async function logout(params) {
     url: '/user/logout',
     method: 'get',
     data: params,
+    withCredentials: true,
   });
 }
 

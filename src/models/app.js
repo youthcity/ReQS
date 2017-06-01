@@ -41,6 +41,13 @@ export default {
         isLogin: true,
       };
     },
+    handleLogout(state) {
+      return {
+        ...state,
+        isLogin: false,
+        user: {},
+      };
+    },
   },
   effects: {
     *login({
@@ -68,9 +75,12 @@ export default {
       const data = yield call(logout, payload);
       if (data.success) {
         yield put({
-          type: 'queryUserSuccess',
-          payload: {}, //data.user
+          type: 'handleLogout',
         });
+        // yield put({
+        //   type: 'queryUserSuccess',
+        //   payload: {}, //data.user
+        // });
       }
     },
     *queryUser({ payload }, { call, put }) {

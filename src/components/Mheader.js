@@ -31,21 +31,16 @@ function Mheader({ location, dispatch, app,
   const userDropMenu = (
     <Menu>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">个人资料</a>
+        <Link to={`/people/${user._id}`}>我的主页</Link>
       </Menu.Item>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">注销</a>
-      </Menu.Item>
-    </Menu>
-  );
-
-  const menu = (
-    <Menu>
-      <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="/cart">个人资料设置</a>
-      </Menu.Item>
-      <Menu.Item>
-        <a onClick={handleLogout} rel="noopener noreferrer" href="javascript:;">注销</a>
+        <a
+          onClick={handleLogout}
+          rel="noopener noreferrer"
+          href="javascript:;"
+        >
+          注销
+        </a>
       </Menu.Item>
     </Menu>
   );

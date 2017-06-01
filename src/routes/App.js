@@ -12,7 +12,6 @@ const { Content, Footer } = Layout;
 function App({ children, form, app, dispatch, location }) {
   const { loginModalVisible, confirmLoading } = app;
   const { validateFieldsAndScroll } = form;
-
   const headerProps = {
     app,
     location,

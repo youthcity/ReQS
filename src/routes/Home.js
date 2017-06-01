@@ -10,8 +10,8 @@ import styles from './Home.less';
 moment.locale('zh-CN');
 const data = require('../assets/data.json').topics;
 
-function Home({ dispatch }) {
-  const isLogin = false;
+function Home({ dispatch, app }) {
+  const { isLogin } = app;
   const showLoginModal = () => {
     dispatch({
       type: 'app/showLoginModal',
@@ -138,8 +138,8 @@ function Home({ dispatch }) {
   );
 }
 
-function mapStateToProps() {
-  return {};
+function mapStateToProps({ app }) {
+  return { app };
 }
 
 export default connect(mapStateToProps)(Home);
