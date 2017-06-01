@@ -1,0 +1,144 @@
+.wrap {
+  margin-top: 20px;
+  .left {
+    min-height: 600px;
+    .question_wrap {
+      background: #fff;
+
+      .panel_heading {
+        padding: 15px;
+        transition: all .3s;
+        background: #fafafa;
+        padding: 15px;
+        border-bottom-color: #eee;
+        .label_question {
+          vertical-align: top;
+          text-align: center;
+          display: block;
+          float: left;
+          background: rgba(0, 154, 96, 0);
+          border: 1px solid #009A61;
+          border-radius: 50%;
+          font-size: 16px;
+          padding: 4px;
+          width: 28px;
+          height: 28px;
+          color: #009A61;
+          font-weight: normal;
+          margin-right: 10px;
+          line-height: 1;
+          margin-top: 5px;
+        }
+        .question_title {
+          margin-bottom: 15px;
+        }
+        .tags_wrap {
+          display: flex;
+          padding-left: 30px;
+          .question_author {
+            margin-left: 10px;
+            font-size: 16px;
+            .mr5 {
+              font-weight: bold;
+              color: #009a61;
+            }
+          }
+        }
+      }
+      .panel_content {
+        padding: 15px;
+        position: relative;
+        letter-spacing: .03em;
+        font-size: 16px;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+      }
+      .panel_footer {
+        padding: 6px 15px;
+        border-top: 1px solid #eee;
+        background: #fafafa;
+      }
+    }
+    .replies_wrap {
+      background: #fff;
+      margin-top: 15px;
+
+    }
+  }
+  .right {
+    .like_wrap {
+      display: block;
+      width: 90px;
+      margin: 0 auto;
+      border-radius: 5px;
+      padding: 10px 0;
+      text-decoration: none;
+      text-align: center;
+      color: #333;
+      font-size: 14px;
+      letter-spacing: .03em;
+      margin-bottom: 20px;
+      &:hover {
+        background: rgba(0, 0, 0, 0.03);
+      }
+      .default_like {
+        display: block;
+        font-size: 40px;
+        margin-bottom: 10px;
+        animation: bounceIn .5s both;
+        &.active {
+          color: #E7703D;
+        }
+      }
+    }
+    .group {
+      text-align: center;
+      .button_group {
+        display: inline-block;
+        margin-bottom: 20px;
+      }
+    }
+    .sharing_wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      text-align: center;
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+    .relpy_title {
+      text-align: center;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .go_down {
+      margin-top: 20px;
+      width: 100%;
+      height: 32px;
+      font-size: 24px;
+      line-height: 1;
+    }
+  }
+}
+
+@keyframes bounceIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  to {
+    transform: scale(1);
+  }
+}

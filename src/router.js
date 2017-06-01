@@ -10,7 +10,7 @@ import Ask from './routes/Ask.js';
 
 import People from './routes/People.js';
 
-import Question from "./routes/Question.js";
+import Question from './routes/Question.js';
 
 function RouterConfig({ history }) {
   return (
@@ -19,10 +19,9 @@ function RouterConfig({ history }) {
         <IndexRoute component={Home} />
         <Route path="/register" component={Register} />
         <Route path="/ask" component={Ask} />
-        {/* <Route path="/people" component={People} />*/}
         <Route path="/people/:id" component={People} />
+        <Route path="/question/:id" component={Question} />
       </Route>
-      <Route path="/question" component={Question} />
     </Router>
   );
 }
