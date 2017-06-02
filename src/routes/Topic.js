@@ -5,6 +5,7 @@ import cx from 'classnames';
 import moment from 'moment';
 
 import styles from './Topic.less';
+import ListItem from '../components/ListItem';
 
 function Topic({ topic }) {
   return (
@@ -19,9 +20,15 @@ function Topic({ topic }) {
           </ul>
         </Card>
       </Row>
-      <Row className={styles.main} gutter={24}>
-        <Col className={styles.main_left} span={18}>
-            left
+      <Row className={styles.main} gutter={24} style={{ marginLeft: 0 }}>
+        <Col className={styles.main_left} span={18} style={{ paddingLeft: 0, paddingRight: 0 }}>
+          <ListItem />
+          <ListItem />
+
+          <ListItem />
+          <ListItem />
+          <ListItem />
+
         </Col>
         <Col className={styles.main_right} span={6}>
           <Card
