@@ -3,6 +3,8 @@ import { connect } from 'dva';
 import { Row, Col, Card, Icon, Alert, Menu, Table, Form, Input, Modal, Button, Select, Tag } from 'antd';
 import cx from 'classnames';
 import moment from 'moment';
+import LzEditor from 'react-lz-editor';
+
 
 import styles from './Question.less';
 import AnswerItem from '../components/AnswerItem';
@@ -47,6 +49,24 @@ function Question() {
     return (
       <div />
     );
+  };
+
+  // 富文本 配置
+  const content = '';
+  const receiveHtml = (content) => {
+    console.log('Recieved content', content);
+  };
+  const uploadConfig = {
+    QINIU_URL: 'http://up-z2.qiniu.com', // 上传地址，现在暂只支持七牛上传
+    QINIU_IMG_TOKEN_URL: 'http://localhost:3000/upload', // 请求图片的token
+    QINIU_PFOP: {
+      url: 'http://www.yourServerAddress.mobi/doQiniuPicPersist.do', // 七牛持久保存请求地址
+    },
+    QINIU_VIDEO_TOKEN_URL: 'http://www.yourServerAddress.mobi/getUptokenOfQiniu.do', // 请求媒体资源的token
+    QINIU_FILE_TOKEN_URL: 'http://www.yourServerAddress.mobi/getUptokenOfQiniu.do?name=patch', // 其他资源的token的获取
+    QINIU_IMG_DOMAIN_URL: 'http://opbc041f6.bkt.clouddn.com', // 图片文件地址的前缀
+    QINIU_DOMAIN_VIDEO_URL: 'http://opbc041f6.bkt.clouddn.com/', // 视频文件地址的前缀
+    QINIU_DOMAIN_FILE_URL: 'http://opbc041f6.bkt.clouddn.com/', //其他文件地址前缀
   };
 
   return (
@@ -102,7 +122,15 @@ function Question() {
           </div>
           <Card className={styles.answer_editor} title="撰写答案">
             <div className={styles.editor_wrap}>
-              <p>3ssss</p>
+              <LzEditor
+                active
+                importContent={content}
+                cbReceiver={receiveHtml}
+                uploadConfig={uploadConfig}
+                fullScreen={false}
+                color={false}
+                convertFormat="html"
+              />
             </div>
             <div className={styles.btn_wrap}>
               <Button className={styles.submit_btn} type="primary" size="large" >提交答案</Button>
