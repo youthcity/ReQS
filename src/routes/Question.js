@@ -19,7 +19,7 @@ const html_content = `
 <p ><img src="http://opbc041f6.bkt.clouddn.com/61573335658058879564.jpeg"/></p>
 <p ><br></p>
 `;
-function Question() {
+function Question({ q, dispatch }) {
   const question = {
     author: { _id: 11111, username: 'youthcity' },
     title: '[北京][2017年6月18日] Rails Girls 复活啦 2017 北京活动报名 | 少女们一天学编程',
@@ -33,7 +33,19 @@ function Question() {
     updatedDate: '2017-06-31T08:52:54.908Z',
   };
 
-  const isLike = false;
+  const { isLike } = q;
+  console.log(isLike);
+  const handleLike = () => {
+    if (isLike) {
+      dispatch({
+        type: 'q/handleHate',
+      });
+    } else {
+      dispatch({
+        type: 'q/handleLike',
+      });
+    }
+  };
 
   const handleGoBottom = () => {
     console.log('go bottom');
@@ -139,7 +151,7 @@ function Question() {
         </Col>
         <Col className={styles.right} span={6}>
           <Card style={{ width: 240 }} bodyStyle={{ padding: '20px' }}>
-            <a href="javascript:;" className={styles.like_wrap}>
+            <a onClick={handleLike} href="javascript:;" className={styles.like_wrap}>
               <Icon className={cx(styles.default_like, { [styles.active]: isLike })} type="heart" />
               <span>{question.likes.length}个赞</span>
             </a>
@@ -170,8 +182,8 @@ function Question() {
   );
 }
 
-function mapStateToProps() {
-  return {};
+function mapStateToProps({ q }) {
+  return { q };
 }
 
 export default connect(mapStateToProps)(Question);
