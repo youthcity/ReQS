@@ -24,7 +24,6 @@ function Mheader({ location, dispatch, app,
     <Menu onClick={() => { console.log('dropdownMenu'); }}>
       <Menu.Item key="1"><Link to="/ask">提问</Link></Menu.Item>
       <Menu.Item key="2">发布招聘</Menu.Item>
-      <Menu.Item key="3">草稿箱</Menu.Item>
     </Menu>
   );
 
@@ -57,7 +56,7 @@ function Mheader({ location, dispatch, app,
             style={{ lineHeight: '60px', fontSize: '14px', fontWeight: '400' }}
           >
             <Menu.Item key="1"><Link to="/">首页</Link></Menu.Item>
-            <Menu.Item key="2"><Link to="/">问答</Link></Menu.Item>
+            <Menu.Item key="2"><Link to="/topic">问答</Link></Menu.Item>
             <Menu.Item key="3"><Link to="/category">头条</Link></Menu.Item>
             <Menu.Item key="4"><Link to="/category?id=100">招聘</Link></Menu.Item>
             {/* <Menu.Item key="5"><Link to="/category?id=200">Wiki</Link></Menu.Item>*/}

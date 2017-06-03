@@ -37,7 +37,7 @@ function ListItem(props) {
           </Link>
         </div>
         <div className={styles.q_detail}>
-          <Link to={`/users/${question.author._id}`}>{question.author.username}</Link>&nbsp;•&nbsp;提问于&nbsp;{moment(question.creationDate).fromNow()}&#x3000;
+          <Link to={`/people/${question.author._id}`}>{question.author.username}</Link>&nbsp;•&nbsp;提问于&nbsp;{moment(question.creationDate).fromNow()}&#x3000;
           <span>{question.pv}&nbsp;浏览</span>
         </div>
       </div>

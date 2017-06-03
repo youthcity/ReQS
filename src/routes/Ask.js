@@ -8,8 +8,8 @@ import styles from './Ask.less';
 const Option = Select.Option;
 const FormItem = Form.Item;
 
-function Ask({ form, ask }) {
-  const { content } = ask;
+function Ask({ form, ask, dispatch }) {
+  const { content, tags } = ask;
   const { getFieldDecorator, validateFieldsAndScroll } = form;
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,13 +19,20 @@ function Ask({ form, ask }) {
         console.log(values);
         return;
       }
-      console.log(values);
+      console.log('content====', content);
+      dispatch({
+        type: 'ask/addQuestion',
+        payload: {
+          content,
+          title: values.title,
+          tags: values.tags,
+        },
+      });
     });
   };
 
-  const selectData = [1, 2, 34, 5, 6, 7, 8, 9];
   const selectOption = () => {
-    return selectData.map((item, key) => <Option key={item}>{item}</Option>);
+    return tags.map((item, key) => <Option key={item._id}>{item.tagName}</Option>);
   };
   const handleChange = (value) => {
     console.log(value);
@@ -61,15 +68,16 @@ function Ask({ form, ask }) {
           )}
         </FormItem>
         <FormItem >
-          {getFieldDecorator('topics', {
+          {getFieldDecorator('tags', {
             rules: [{ required: true, message: '请输入标签!' }],
           })(
             <Select
               size="large"
-              mode="tags"
+              mode="multiple"
               style={{ width: '100%' }}
               searchPlaceholder="标签模式"
               onChange={handleChange}
+              optionFilterProp="children"
               placeholder="标签，如：react 可使用回车自动分隔"
             >
               {selectOption()}

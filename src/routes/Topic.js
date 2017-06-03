@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import { Row, Col, Card, Icon, Alert, Menu, Table, Form, Input, Modal, Button, Select, Tag } from 'antd';
 import cx from 'classnames';
 import moment from 'moment';
+import { Link } from 'dva/router';
 
 import styles from './Topic.less';
 import ListItem from '../components/ListItem';
@@ -35,7 +36,7 @@ function Topic({ topic }) {
             bodyStyle={{ padding: '15px' }}
             title="今天，你编程遇到了什么问题呢？"
           >
-            <Button size="large" type="primary" style={{ width: '100%' }}>提问</Button>
+            <Link to="/ask"><Button size="large" type="primary" style={{ width: '100%' }}>提问</Button></Link>
           </Card>
           <Card
             bodyStyle={{ padding: '15px' }}
