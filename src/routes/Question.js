@@ -20,21 +20,7 @@ const html_content = `
 <p ><br></p>
 `;
 function Question({ q, dispatch }) {
-  const question = {
-    author: { _id: 11111, username: 'youthcity' },
-    title: '[北京][2017年6月18日] Rails Girls 复活啦 2017 北京活动报名 | 少女们一天学编程',
-    content: '',
-    answer: [1, 2, 3, 45, 6],
-    likes: [1, 2, 3, 4],
-    excellent: 1, // 0 false 1 true
-    pv: 4,
-    tags: ['react', 'tt', 'js'],
-    creationDate: '2017-05-31T08:52:54.908Z',
-    updatedDate: '2017-06-31T08:52:54.908Z',
-  };
-
-  const { isLike } = q;
-  console.log(isLike);
+  const { isLike, question } = q;
   const handleLike = () => {
     if (isLike) {
       dispatch({
@@ -47,13 +33,9 @@ function Question({ q, dispatch }) {
     }
   };
 
-  const handleGoBottom = () => {
-    console.log('go bottom');
-  };
-
   const getTags = () => {
     return question.tags.map((item, key) => {
-      return (<Tag key={key} color="green" style={{ fontSize: '20px' }}>{item}</Tag>);
+      return (<Tag key={key} color="green" style={{ fontSize: '20px' }}>{item.tagName}</Tag>);
     });
   };
 
@@ -95,7 +77,7 @@ function Question({ q, dispatch }) {
                 {getTags()}
                 <div className={styles.question_author}>
                   <a className={styles.mr5} href={`/people/${question.author._id}`}>{question.author.username}</a>
-                  {moment(question.creationDate).fromNow()} 提问
+                  &#x3000;{moment(question.creationDate).fromNow()} 提问
               </div>
               </div>
 
@@ -106,7 +88,7 @@ function Question({ q, dispatch }) {
           }
             <div
               className={styles.panel_content}
-              dangerouslySetInnerHTML={{ __html: html_content }}
+              dangerouslySetInnerHTML={{ __html: question.content }}
             />
             <div className={styles.panel_footer}>
               <ButtonGroup size="large">
@@ -174,7 +156,6 @@ function Question({ q, dispatch }) {
             </div>
             <h4 className={styles.relpy_title}>共收到&nbsp;{question.answer.length}&nbsp;条回答</h4>
             <h4 className={styles.relpy_title}>{question.pv}&nbsp;次阅读</h4>
-            {/* <Button onClick={handleGoBottom} className={styles.go_down}><Icon type="arrow-down" /></Button>*/}
           </Card>
         </Col>
       </Row>

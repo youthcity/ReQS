@@ -17,6 +17,7 @@
     "dva": "^1.2.1",
     "dva-loading": "^0.2.1",
     "moment": "^2.18.1",
+    "path-to-regexp": "^1.7.0",
     "qs": "^6.4.0",
     "react": "^15.4.0",
     "react-dom": "^15.4.0",

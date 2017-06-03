@@ -8,3 +8,11 @@ export async function addQuestion(params) {
     withCredentials: true,
   });
 }
+
+export async function getQuestion(id, params) {
+  return request({
+    url: `/question/${id}`,
+    method: 'get',
+    data: params,
+  });
+}
