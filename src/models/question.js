@@ -3,6 +3,8 @@ import { message } from 'antd';
 import { routerRedux } from 'dva/router';
 
 import { getQuestion } from '../services/question';
+import { addAnswer, addComment } from '../services/answer';
+
 
 const question = {
   author: { _id: 11111, username: 'youthcity' },
@@ -22,6 +24,7 @@ export default {
   state: {
     isLike: false,
     question,
+    answers: [],
   },
   reducers: {
     handleLike(state) {
@@ -37,10 +40,15 @@ export default {
       };
     },
     fetchQuestionSuccess(state, { payload }) {
-      console.log('===PL====', payload);
       return {
         ...state,
         question: payload,
+      };
+    },
+    fetchAnswersSuccess(state, { payload }) {
+      return {
+        ...state,
+        answers: payload,
       };
     },
   },
@@ -50,11 +58,28 @@ export default {
       if (data.success && data.result) {
         yield put({
           type: 'fetchQuestionSuccess',
-          payload: data.result,
+          payload: data.result.question,
+        });
+        yield put({
+          type: 'fetchAnswersSuccess',
+          payload: data.result.answers,
         });
       } else {
         yield put(routerRedux.push('/topic'));
         message.error('服务器君找不到该问题了~~', 2);
+      }
+    },
+    *submitAnswer({ payload }, { put, call }) {
+      const data = yield call(addAnswer, payload);
+      if (data.success) {
+        message.success('添加答案成功!');
+      }
+    },
+    *submitComment({ payload }, { put, call }) {
+      console.log('==payload=', payload);
+      const data = yield call(addComment, payload);
+      if (data.success) {
+        message.success('添加评论成功');
       }
     },
   },

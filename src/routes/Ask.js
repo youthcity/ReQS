@@ -9,8 +9,10 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 
 function Ask({ form, ask, dispatch }) {
-  const { content, tags } = ask;
+  const { tags } = ask;
   const { getFieldDecorator, validateFieldsAndScroll } = form;
+
+  let editorContent = '';
   const handleSubmit = (e) => {
     e.preventDefault();
     validateFieldsAndScroll((errors, values) => {
@@ -19,15 +21,17 @@ function Ask({ form, ask, dispatch }) {
         console.log(values);
         return;
       }
-      console.log('content====', content);
-      dispatch({
-        type: 'ask/addQuestion',
-        payload: {
-          content,
-          title: values.title,
-          tags: values.tags,
-        },
-      });
+
+      if (editorContent) {
+        dispatch({
+          type: 'ask/addQuestion',
+          payload: {
+            content: editorContent,
+            title: values.title,
+            tags: values.tags,
+          },
+        });
+      }
     });
   };
 
@@ -40,6 +44,7 @@ function Ask({ form, ask, dispatch }) {
 
   // editor
   const receiveHtml = (content) => {
+    editorContent = content;
     console.log('Recieved content', content);
   };
   const uploadConfig = {
@@ -87,7 +92,7 @@ function Ask({ form, ask, dispatch }) {
         <FormItem >
           <LzEditor
             active
-            importContent={content}
+            importContent={editorContent}
             cbReceiver={receiveHtml}
             uploadConfig={uploadConfig}
             fullScreen={false}

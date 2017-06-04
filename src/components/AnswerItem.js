@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Card, Icon, Alert, Menu, Table, Form, Input, Modal, Button, Select, Tag } from 'antd';
+import { Row, Col, Card, Icon, message, Alert, Menu, Table, Form, Input, Modal, Button, Select, Tag } from 'antd';
 import cx from 'classnames';
 import moment from 'moment';
 
@@ -9,14 +9,15 @@ import styles from './AnswerItem.less';
 class AnswerItem extends React.Component {
   constructor(props) {
     super(props);
-    // const { dataSource } = props;
-
+    const { voteup_count } = props.answer;
 
     this.state = {
-      up_active: false,
-      down_active: false,
-      voteup_count: 2,
+      up_active: false,   // 赞同
+      down_active: false, // 反对
+      voteup_count,
       is_like: false,
+      comment_content: '',
+      is_comments_visible: false,
     };
   }
 
@@ -47,16 +48,35 @@ class AnswerItem extends React.Component {
                     : this.state.voteup_count + 1,
     });
   }
+  handleCommentLike() {
+    this.setState({
+      is_like: !this.state.is_like,
+    });
+  }
+
+  handleChange(e) {
+    this.setState({
+      comment_content: e.target.value,
+    });
+  }
+
+  handleSubmitComment() {
+    if (!this.state.comment_content) {
+      message.error('评论不能为空~');
+      return;
+    }
+    this.props.submitCommet(this.props.answer._id, this.state.comment_content);
+  }
+
+  handleCommentShow() {
+    this.setState({
+      is_comments_visible: !this.state.is_comments_visible,
+    });
+  }
 
   render() {
-    const answer = {
-      author: { username: '11', _id: '11111', avatar: '333' },
-      content: '<p>更具可读性，以及通常来说更少的代码。</p>',
-      creationDate: '2017-05-31T08:52:54.908Z',
-      comment: [1, 2, 3, 4, 5],
-      likes: [],
-      voteup_count: 2,
-    };
+    const answer = this.props.answer;
+
     return (
       <div className={styles.item_wrap}>
         <div className={styles.left}>
@@ -82,9 +102,9 @@ class AnswerItem extends React.Component {
           <div className={styles.answer_info}>
             <ul className={styles.info_list}>
               <li>{moment(answer.creationDate).fromNow()}回答</li>
-              <li><a href="javascript:;">{answer.comment.length} 评论</a></li>
+              <li><a href="javascript:;" onClick={this.handleCommentShow.bind(this)}>{answer.comment.length} 评论</a></li>
               <li>
-                <a className={cx(styles.like_heart, { [styles.like_active]: this.state.is_like })}>
+                <a onClick={this.handleCommentLike.bind(this)} className={cx(styles.like_heart, { [styles.like_active]: this.state.is_like })}>
                   <Icon type="heart" /> 喜欢
                 </a>
               </li>
@@ -93,13 +113,18 @@ class AnswerItem extends React.Component {
               <img className={styles.user_avatar} src={answer.author.avatar} alt="用户头像" />
             </div>
           </div>
-          <div className={styles.comments_wrap}>
-            <Comment />
-            <Comment />
-            <Comment />
+          <div className={cx(styles.comments_wrap, { [styles.hide]: this.state.is_comments_visible })}>
+            {answer.comment.map((item, key) => {
+              return (
+                <Comment
+                  key={key}
+                  comment={item}
+                />
+              );
+            })}
             <div className={styles.comment_form}>
-              <Input style={{ marginRight: '15px' }} type="textarea" />
-              <Button size="large">提交评论</Button>
+              <Input style={{ marginRight: '15px' }} type="textarea" value={this.state.comment_content} onChange={this.handleChange.bind(this)} />
+              <Button size="large" onClick={this.handleSubmitComment.bind(this)}>提交评论</Button>
             </div>
           </div>
         </div>

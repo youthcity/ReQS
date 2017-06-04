@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Row, Col, Card, Icon, Alert, Menu, Table, Form, Input, Modal, Button, Select, Tag } from 'antd';
+import { Row, Col, Card, Icon, Alert, message, Menu, Table, Form, Input, Modal, Button, Select, Tag } from 'antd';
 import cx from 'classnames';
 import moment from 'moment';
 import LzEditor from 'react-lz-editor';
@@ -12,15 +12,9 @@ import AnswerItem from '../components/AnswerItem';
 moment.locale('zh-CN');
 
 const ButtonGroup = Button.Group;
-const html_content = `
- <p >菲菲<br>
-<span style="color:#Da4453">你小明我的世界~~</span></p>
-<p ><br></p>
-<p ><img src="http://opbc041f6.bkt.clouddn.com/61573335658058879564.jpeg"/></p>
-<p ><br></p>
-`;
+
 function Question({ q, dispatch }) {
-  const { isLike, question } = q;
+  const { isLike, question, answers } = q;
   const handleLike = () => {
     if (isLike) {
       dispatch({
@@ -33,6 +27,21 @@ function Question({ q, dispatch }) {
     }
   };
 
+
+  // 提交评论
+  const submitCommet = (id, content) => {
+    if (id && content) {
+      dispatch({
+        type: 'q/submitComment',
+        payload: {
+          id,
+          content,
+        },
+      });
+    }
+  };
+
+
   const getTags = () => {
     return question.tags.map((item, key) => {
       return (<Tag key={key} color="green" style={{ fontSize: '20px' }}>{item.tagName}</Tag>);
@@ -40,16 +49,38 @@ function Question({ q, dispatch }) {
   };
 
   const get_replies = () => {
-    return (
-      <div />
-    );
+    return answers.map((item, key) => {
+      return (
+        <AnswerItem
+          key={key}
+          answer={item}
+          submitCommet={submitCommet}
+        />
+      );
+    });
   };
 
   // 富文本 配置
-  const content = '';
+  let answerContent = '';
   const receiveHtml = (content) => {
+    answerContent = content;
     console.log('Recieved content', content);
   };
+  const handleSubmitAnswer = () => {
+    if (answerContent.length < 15) {
+      message.error('答案不能少于15个字哦~请重新输入你的答案');
+      return;
+    }
+    dispatch({
+      type: 'q/submitAnswer',
+      payload: {
+        content: answerContent,
+        questionId: question._id,
+      },
+    });
+  };
+
+
   const uploadConfig = {
     QINIU_URL: 'http://up-z2.qiniu.com', // 上传地址，现在暂只支持七牛上传
     QINIU_IMG_TOKEN_URL: 'http://localhost:3000/upload', // 请求图片的token
@@ -62,6 +93,7 @@ function Question({ q, dispatch }) {
     QINIU_DOMAIN_VIDEO_URL: 'http://opbc041f6.bkt.clouddn.com/', // 视频文件地址的前缀
     QINIU_DOMAIN_FILE_URL: 'http://opbc041f6.bkt.clouddn.com/', //其他文件地址前缀
   };
+
 
   return (
     <div className={styles.wrap}>
@@ -103,14 +135,13 @@ function Question({ q, dispatch }) {
             <Card
               bodyStyle={{ padding: '15px' }}
               className={styles.replies_wrap}
-              title={`共收到 ${question.answer.length} 条回答`}
+              title={`共收到 ${answers.length} 条回答`}
               extra={<ButtonGroup>
                 <Button disabled>默认排序</Button>
                 <Button>时间排序</Button>
               </ButtonGroup>
                     }
             >
-              <AnswerItem />
               {get_replies()}
             </Card>
           </div>
@@ -118,7 +149,7 @@ function Question({ q, dispatch }) {
             <div className={styles.editor_wrap}>
               <LzEditor
                 active
-                importContent={content}
+                importContent={answerContent}
                 cbReceiver={receiveHtml}
                 uploadConfig={uploadConfig}
                 fullScreen={false}
@@ -127,7 +158,7 @@ function Question({ q, dispatch }) {
               />
             </div>
             <div className={styles.btn_wrap}>
-              <Button className={styles.submit_btn} type="primary" size="large" >提交答案</Button>
+              <Button onClick={handleSubmitAnswer} className={styles.submit_btn} type="primary" size="large" >提交答案</Button>
             </div>
           </Card>
         </Col>
@@ -154,7 +185,7 @@ function Question({ q, dispatch }) {
                 <a href="http://www.jiathis.com/share" className="jiathis jiathis_txt jtico jtico_jiathis" target="_blank" />
               </div>
             </div>
-            <h4 className={styles.relpy_title}>共收到&nbsp;{question.answer.length}&nbsp;条回答</h4>
+            <h4 className={styles.relpy_title}>共收到&nbsp;{answers.length}&nbsp;条回答</h4>
             <h4 className={styles.relpy_title}>{question.pv}&nbsp;次阅读</h4>
           </Card>
         </Col>

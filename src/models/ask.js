@@ -6,7 +6,6 @@ import { addQuestion } from '../services/question';
 export default {
   namespace: 'ask',
   state: {
-    content: '<h4>在这里输入你的答案</h4>',
     tags: [],
   },
   reducers: {
