@@ -8,28 +8,37 @@ import { Link } from 'dva/router';
 import styles from './Topic.less';
 import ListItem from '../components/ListItem';
 
-function Topic({ topic }) {
+function Topic({ topic, dispatch }) {
+  const { questionList, currentType } = topic;
+
+  const handleFetchData = (fetchType) => {
+    dispatch({
+      type: 'topic/fetchList',
+      payload: fetchType,
+    });
+  };
+
   return (
     <div className={styles.wrap}>
       <Row className={styles.nav}>
         <Card bodyStyle={{ padding: '10px' }}>
           <ul className={styles.nav_list}>
-            <li><a className={cx({ [styles.active]: true })} href="javascript:;">默认</a></li>
-            <li><a href="javascript:;"><Icon type="smile-o" />&nbsp;优质帖子</a></li>
-            <li><a href="javascript:;">无人问津</a></li>
-            <li><a href="javascript:;">最新发布</a></li>
+            <li><a onClick={handleFetchData.bind(null, 'default')} className={cx({ [styles.active]: currentType === 'default' })} href="javascript:;">默认</a></li>
+            <li><a onClick={handleFetchData.bind(null, 'excellent')} className={cx({ [styles.active]: currentType === 'excellent' })} href="javascript:;"><Icon type="smile-o" />&nbsp;优质帖子</a></li>
+            <li><a onClick={handleFetchData.bind(null, 'no_reply')} className={cx({ [styles.active]: currentType === 'no_reply' })} href="javascript:;">无人问津</a></li>
+            <li><a onClick={handleFetchData.bind(null, 'recent')} className={cx({ [styles.active]: currentType === 'recent' })} href="javascript:;">最新发布</a></li>
           </ul>
         </Card>
       </Row>
       <Row className={styles.main} gutter={24} style={{ marginLeft: 0 }}>
         <Col className={styles.main_left} span={18} style={{ paddingLeft: 0, paddingRight: 0 }}>
-          <ListItem />
-          <ListItem />
-
-          <ListItem />
-          <ListItem />
-          <ListItem />
-
+          {questionList.map((item, key) => {
+            return (
+              <ListItem
+                question={item}
+              />
+            );
+          })}
         </Col>
         <Col className={styles.main_right} span={6}>
           <Card

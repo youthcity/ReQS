@@ -9,10 +9,17 @@ export async function addQuestion(params) {
   });
 }
 
-export async function getQuestion(id, params) {
+export async function getQuestion(id) {
   return request({
     url: `/question/${id}`,
     method: 'get',
-    data: params,
+  });
+}
+
+
+export async function getQuestionList(params) {
+  return request({
+    url: `/question?type=${params}`,
+    method: 'get',
   });
 }

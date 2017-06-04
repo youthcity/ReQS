@@ -7,18 +7,19 @@ import { Link } from 'dva/router';
 import styles from './ListItem.less';
 
 function ListItem(props) {
-  const question = {
-    _id: '2222',
-    author: { _id: '22222', username: 'youthcity', avatar: 'http://opbc041f6.bkt.clouddn.com/97449629158272483720.jpg' },
-    title: '如何学下React',
-    content: '无',
-    excellent: 1,
-    answer: [],
-    pv: 0,
-    Tags: [],
-    voteup_count: 3,
-    creationDate: '2017-05-31T08:52:54.907Z',
-  };
+  // const question = {
+  //   _id: '2222',
+  //   author: { _id: '22222', username: 'youthcity', avatar: 'http://opbc041f6.bkt.clouddn.com/97449629158272483720.jpg' },
+  //   title: '如何学下React',
+  //   content: '无',
+  //   excellent: 1,
+  //   answer: [],
+  //   pv: 0,
+  //   Tags: [],
+  //   voteup_count: 3,
+  //   creationDate: '2017-05-31T08:52:54.907Z',
+  // };
+  const question = props.question;
 
   return (
     <div className={styles.wrap}>
