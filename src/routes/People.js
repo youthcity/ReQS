@@ -19,9 +19,9 @@ function People({ app, form, dispatch, people }) {
   // };
   const { getFieldDecorator, validateFieldsAndScroll } = form;
   const { user } = app;
-  const { editModalVisible, confirmLoading } = people;
+  const { editModalVisible, confirmLoading, profile } = people;
 
-  const isSelf = true;
+  const isSelf = user._id === profile._id;
 
   const currentTitle = '我的回答';
 
@@ -42,7 +42,7 @@ function People({ app, form, dispatch, people }) {
     dataIndex: 'pv',
     key: 'pv',
     render: (text, record, index) => {
-      return (<span className={styles.label}>{text} 次</span>);
+      return (<span key={index} className={styles.label}>{text} 次</span>);
     },
   }, {
     title: '标题',
@@ -53,7 +53,7 @@ function People({ app, form, dispatch, people }) {
     dataIndex: 'creationDate',
     key: 'creationDate',
     render: (text, record, index) => {
-      return (<span>{moment(text).format('LLL')}</span>);
+      return (<span key={index}>{moment(text).format('LLL')}</span>);
     },
   }];
 
@@ -72,7 +72,10 @@ function People({ app, form, dispatch, people }) {
       console.log(values);
       dispatch({
         type: 'people/editUser',
-        payload: values,
+        payload: {
+          id: user._id,
+          data: values,
+        },
       });
     });
   };
@@ -91,6 +94,7 @@ function People({ app, form, dispatch, people }) {
   };
 
   const handleSubmit = () => {
+    validateFieldsAndScroll();
     console.log('submit');
   };
 
@@ -98,17 +102,17 @@ function People({ app, form, dispatch, people }) {
     <div className={styles.wrap}>
       <Row className={styles.header}>
         <Col span={6} className={styles.left}>
-          <Link to={`/people/${user._id}`} style={{ textAlign: 'center' }} >
-            <img className={styles.avatar} src={user.avatar} alt="用户头像" />
+          <Link to={`/people/${profile._id}`} style={{ textAlign: 'center' }} >
+            <img className={styles.avatar} src={profile.avatar} alt="用户头像" />
           </Link>
-          <p className={styles.pv}><Icon type="eye-o" className={styles.icon} />&nbsp;主页被访问 <span className={styles.highlight} >{user.pv}</span> 次</p>
+          <p className={styles.pv}><Icon type="eye-o" className={styles.icon} />&nbsp;主页被访问 <span className={styles.highlight} >{profile.pv}</span> 次</p>
         </Col>
         <Col span={8} className={styles.center}>
-          <h1 className={styles.title}>{user.username}</h1>
-          <p className={styles.item}><Icon type="environment-o" className={styles.icon} /> {user.location ? user.location : '来自神秘的地方'}</p>
-          <p className={styles.item}><Icon type="solution" className={styles.icon} /> {user.email ? user.email : '没有填联系地址'}</p>
-          <p className={styles.item}>性别 &#x3000;{user.gender === 'x' ? '保密' : user.email === 'm' ? <Icon type="man" /> : <Icon type="woman" />}</p>
-          <p className={styles.item}><Icon type="calendar" className={styles.icon} />注册于 {moment(user.creationDate).format('YYYY-MM-DD')}</p>
+          <h1 className={styles.title}>{profile.username}</h1>
+          <p className={styles.item}><Icon type="environment-o" className={styles.icon} /> {profile.location ? profile.location : '来自神秘的地方'}</p>
+          <p className={styles.item}><Icon type="solution" className={styles.icon} /> {profile.email ? profile.email : '没有填联系地址'}</p>
+          <p className={styles.item}>性别 &#x3000;{profile.gender === 'x' ? '保密' : profile.email === 'm' ? <Icon type="man" /> : <Icon type="woman" />}</p>
+          <p className={styles.item}><Icon type="calendar" className={styles.icon} />注册于 {moment(profile.creationDate).format('YYYY-MM-DD')}</p>
         </Col>
         <Col span={12} className={styles.right}>
           <div className={styles.container}>
@@ -172,7 +176,7 @@ function People({ app, form, dispatch, people }) {
               </div>
             </div>
             <div className={styles.profile_body}>
-              {user.aboutMe ? user.aboutMe : '这个人好懒什么都不写~'}
+              {profile.aboutMe ? profile.aboutMe : '这个人好懒什么都不写~'}
             </div>
           </div>
         </Col>
@@ -183,7 +187,7 @@ function People({ app, form, dispatch, people }) {
             mode="vertical"
             style={{ backgroundColor: '#f7f7f7', fontWeight: '400' }}
           >
-            <Menu.Item style={{ fontSize: '16px' }}>{isSelf ? '我' : 'TA'}的主页</Menu.Item>
+            {/* <Menu.Item style={{ fontSize: '16px' }}>{isSelf ? '我' : 'TA'}的主页</Menu.Item>*/}
             <Menu.Item style={{ fontSize: '16px' }}>{isSelf ? '我' : 'TA'}的提问</Menu.Item>
             <Menu.Item style={{ fontSize: '16px' }}>{isSelf ? '我' : 'TA'}的回答</Menu.Item>
             <Menu.Item style={{ fontSize: '16px' }}>{isSelf ? '我' : 'TA'}关注的人</Menu.Item>

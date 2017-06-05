@@ -33,8 +33,17 @@ export default {
     },
   },
   subscriptions: {
-    setup({ dispatch }) {
-      dispatch({ type: 'fetchList', payload: 'default' });
+    setup({ dispatch, history }) {
+      history.listen((location) => {
+        if (location.pathname.indexOf('topic') > 0) {
+          const { type } = location.query;
+          if (!type) {
+            dispatch({ type: 'fetchList', payload: 'default' });
+          } else {
+            dispatch({ type: 'fetchList', payload: type });
+          }
+        }
+      });
     },
   },
 };

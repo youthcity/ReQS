@@ -77,7 +77,7 @@ function Home({ dispatch, app }) {
                 <Icon className={styles.icon} style={{ color: '#7E57C2' }} type="appstore-o" />
               </div>
               <div className={styles.card_text}>
-                <span>ReQS 社区</span>
+                <span>ReQS 问答</span>
                 <Icon type="arrow-right" style={{ fontSize: '16px' }} />
               </div>
             </Card>
@@ -110,7 +110,7 @@ function Home({ dispatch, app }) {
           </a>
         </Col>
         <Col span="6">
-          <a href="/topics/popular">
+          <Link to="/topic?type=excellent">
             <Card bordered={false} bodyStyle={{ padding: 0 }}>
               <div className={styles.card_icon}>
                 <Icon className={styles.icon} style={{ color: '#009688' }} type="smile-o" />
@@ -120,7 +120,7 @@ function Home({ dispatch, app }) {
                 <Icon type="arrow-right" style={{ fontSize: '16px' }} />
               </div>
             </Card>
-          </a>
+          </Link>
         </Col>
       </Row>
       <div className={styles.suggest_topics_panel}>
@@ -131,7 +131,7 @@ function Home({ dispatch, app }) {
           {getTopicItems()}
         </div>
         <div className={styles.panel_footer}>
-          <a href="/topics/excellent">查看更多精华帖...</a>
+          <a href="/topic?type=excellent">查看更多精华帖...</a>
         </div>
       </div>
     </div>

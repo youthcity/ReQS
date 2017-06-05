@@ -35,6 +35,7 @@ function Topic({ topic, dispatch }) {
           {questionList.map((item, key) => {
             return (
               <ListItem
+                key={key}
                 question={item}
               />
             );

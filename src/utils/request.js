@@ -27,9 +27,9 @@ const fetch = (options) => {
     case 'post':
       return axios.post(url, data, { withCredentials });
     case 'put':
-      return axios.put(url, data);
+      return axios.put(url, data, { withCredentials });
     case 'patch':
-      return axios.patch(url, data);
+      return axios.patch(url, data, { withCredentials });
     default:
       return axios(options);
   }
