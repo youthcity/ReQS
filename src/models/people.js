@@ -1,7 +1,7 @@
 import pathToRegexp from 'path-to-regexp';
 import { message } from 'antd';
 
-import { edit, incPv, getUserInfoById } from '../services/user';
+import { edit, incPv, getUserInfoById, getLogsByUserId } from '../services/user';
 import { getUserInfo } from '../services/app';
 
 export default {
@@ -10,6 +10,8 @@ export default {
     editModalVisible: false,
     confirmLoading: false,
     profile: {},
+    current_type: 'question',
+    dataSource: [],
   },
   reducers: {
     showEditModal(state) {
@@ -40,6 +42,18 @@ export default {
       return {
         ...state,
         profile: payload,
+      };
+    },
+    handleChangeType(state, { payload }) {
+      return {
+        ...state,
+        current_type: payload,
+      };
+    },
+    handleChangeDataSource(state, { payload }) {
+      return {
+        ...state,
+        dataSource: payload,
       };
     },
   },
@@ -76,6 +90,13 @@ export default {
         yield put({ type: 'fetchUserInfoSuccess', payload: data.user });
       }
     },
+    *fetchUserLogsByType({ payload }, { call, put }) {
+      const data = yield call(getLogsByUserId, payload);
+      if (data.success) {
+        yield put({ type: 'handleChangeType', payload: payload.type });
+        yield put({ type: 'handleChangeDataSource', payload: data.result });
+      }
+    },
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -87,6 +108,13 @@ export default {
             dispatch({
               type: 'fetchUserInfo',
               payload: userId,
+            });
+            dispatch({
+              type: 'fetchUserLogsByType',
+              payload: {
+                id: userId,
+                type: 'question',
+              },
             });
           }
         }

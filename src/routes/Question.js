@@ -16,13 +16,14 @@ const ButtonGroup = Button.Group;
 function Question({ q, dispatch }) {
   const { isLike, question, answers } = q;
   const handleLike = () => {
-    if (isLike) {
+    if (!isLike) {
       dispatch({
-        type: 'q/handleHate',
+        type: 'q/addLike',
+        payload: question._id,
       });
     } else {
       dispatch({
-        type: 'q/handleLike',
+        type: 'q/handleHate',
       });
     }
   };
@@ -41,6 +42,27 @@ function Question({ q, dispatch }) {
     }
   };
 
+  // 回答感谢
+  const addThanks = (id) => {
+    if (id) {
+      dispatch({
+        type: 'q/addThanks',
+        payload: id,
+      });
+    }
+  };
+
+  const voteAnswer = (answerId, type) => {
+    if (answerId) {
+      dispatch({
+        type: 'q/voteAnswer',
+        payload: {
+          id: answerId,
+          type,
+        },
+      });
+    }
+  };
 
   const getTags = () => {
     return question.tags.map((item, key) => {
@@ -48,13 +70,15 @@ function Question({ q, dispatch }) {
     });
   };
 
-  const get_replies = () => {
+  const getReplies = () => {
     return answers.map((item, key) => {
       return (
         <AnswerItem
           key={key}
           answer={item}
           submitCommet={submitCommet}
+          addThanks={addThanks}
+          voteAnswer={voteAnswer}
         />
       );
     });
@@ -94,6 +118,21 @@ function Question({ q, dispatch }) {
     QINIU_DOMAIN_FILE_URL: 'http://opbc041f6.bkt.clouddn.com/', //其他文件地址前缀
   };
 
+  const handleFavorite = () => {
+    dispatch({
+      type: 'q/addFavorite',
+      payload: question._id,
+    });
+  };
+
+  const handleFollow = () => {
+    console.log('==question====', question.author._id);
+
+    dispatch({
+      type: 'q/addFollow',
+      payload: question.author._id,
+    });
+  };
 
   return (
     <div className={styles.wrap}>
@@ -124,9 +163,9 @@ function Question({ q, dispatch }) {
             />
             <div className={styles.panel_footer}>
               <ButtonGroup size="large">
-                <Button icon="like">{question.likes.length} 个赞</Button>
-                <Button icon="eye">关注</Button>
-                <Button icon="book">收藏</Button>
+                <Button onClick={handleLike} icon="like">&nbsp;{question.likes.length} 个赞</Button>
+                <Button onClick={handleFollow} icon="eye">关注</Button>
+                <Button onClick={handleFavorite} icon="book">收藏</Button>
               </ButtonGroup>
             </div>
           </div>
@@ -142,7 +181,7 @@ function Question({ q, dispatch }) {
               </ButtonGroup>
                     }
             >
-              {get_replies()}
+              {getReplies()}
             </Card>
           </div>
           <Card className={styles.answer_editor} title="撰写答案">
@@ -171,8 +210,8 @@ function Question({ q, dispatch }) {
 
             <div className={styles.group}>
               <ButtonGroup size="large" className={styles.button_group}>
-                <Button icon="eye-o">关注</Button>
-                <Button icon="book">收藏</Button>
+                <Button onClick={handleFollow} icon="eye-o">关注</Button>
+                <Button onClick={handleFavorite} icon="book">收藏</Button>
               </ButtonGroup>
             </div>
             <div className={styles.sharing_wrap}>

@@ -19,25 +19,46 @@ function People({ app, form, dispatch, people }) {
   // };
   const { getFieldDecorator, validateFieldsAndScroll } = form;
   const { user } = app;
-  const { editModalVisible, confirmLoading, profile } = people;
+  const { editModalVisible, confirmLoading, profile, dataSource, current_type } = people;
 
   const isSelf = user._id === profile._id;
 
   const currentTitle = '我的回答';
 
-  const dataSource = [{
-    key: '1',
-    pv: 0,
-    title: 'docker绑定了nginx端口 外部访问不到',
-    creationDate: '2017-05-31T08:52:54.907Z',
-  }, {
-    key: '1',
-    pv: 0,
-    title: 'shadowsocks为何不搞个java版本？',
-    creationDate: '2017-05-31T08:52:54.907Z',
-  }];
+  const getCurrentTitle = (type) => {
+    let title = '我的回答';
+    switch (type) {
+      case 'question':
+        title = '我的提问';
+        break;
+      case 'answer':
+        title = '我的回答';
+        break;
+      case 'follow':
+        title = '我关注的人';
+        break;
+      case 'fans':
+        title = '我的粉丝';
+        break;
+      default:
+        title = '我的回答';
+    }
+    return title;
+  };
 
-  const columns = [{
+  // const dataSource = [{
+  //   key: '0',
+  //   pv: 0,
+  //   title: 'docker绑定了nginx端口 外部访问不到',
+  //   creationDate: '2017-05-31T08:52:54.907Z',
+  // }, {
+  //   key: '1',
+  //   pv: 0,
+  //   title: 'shadowsocks为何不搞个java版本？',
+  //   creationDate: '2017-05-31T08:52:54.907Z',
+  // }];
+
+  const questionColumns = [{
     title: '浏览',
     dataIndex: 'pv',
     key: 'pv',
@@ -48,6 +69,9 @@ function People({ app, form, dispatch, people }) {
     title: '标题',
     dataIndex: 'title',
     key: 'title',
+    render: (text, record, index) => {
+      return (<Link key={index} to={`/question/${record._id}`} >{text}</Link>);
+    },
   }, {
     title: '时间',
     dataIndex: 'creationDate',
@@ -57,9 +81,71 @@ function People({ app, form, dispatch, people }) {
     },
   }];
 
+  const answerColumns = [{
+    title: '得票数',
+    dataIndex: 'voteup_count',
+    key: 'voteup_count',
+    render: (text, record, index) => {
+      return (<span key={index} className={styles.label}>{text} 票</span>);
+    },
+  }, {
+    title: '问题标题',
+    dataIndex: 'questionId.title',
+    key: 'title',
+    render: (text, record, index) => {
+      console.log(record, '+==========');
+      return (<Link key={index} to={`/question/${record.questionId && record.questionId._id}`} >{text}</Link>);
+    },
+  }, {
+    title: '时间',
+    dataIndex: 'creationDate',
+    key: 'creationDate',
+    render: (text, record, index) => {
+      return (<span key={index}>{moment(text).format('LLL')}</span>);
+    },
+  }];
+
+  const peopleColumns = [{
+    title: '头像',
+    dataIndex: 'avatar',
+    key: 'avatar',
+    render: (text, record, index) => {
+      return (<img key={index} className={styles.people_avatar} src={text} />);
+    },
+  }, {
+    title: '用户名',
+    dataIndex: 'username',
+    key: 'username',
+    render: (text, record, index) => {
+      return (<Link key={index} to={`/people/${record._id}`} >{text}</Link>);
+    },
+  }, {
+    title: '时间',
+    dataIndex: 'creationDate',
+    key: 'creationDate',
+    render: (text, record, index) => {
+      return (<span key={index}>{moment(text).format('LLL')}</span>);
+    },
+  }];
+
+  const getColumns = (type) => {
+    switch (type) {
+      case 'question':
+        return questionColumns;
+      case 'answer':
+        return answerColumns;
+      case 'fans':
+        return peopleColumns;
+      case 'follow':
+        return peopleColumns;
+      default:
+        return questionColumns;
+    }
+  };
+
 
   const getMain = () => {
-    return (<Table dataSource={dataSource} columns={columns} />);
+    return (<Table dataSource={getAddKeyArray(dataSource)} columns={getColumns(current_type)} />);
   };
 
   // modal func
@@ -93,10 +179,16 @@ function People({ app, form, dispatch, people }) {
     });
   };
 
-  const handleSubmit = () => {
-    validateFieldsAndScroll();
-    console.log('submit');
+  const handleChangeType = (type) => {
+    dispatch({
+      type: 'people/fetchUserLogsByType',
+      payload: {
+        id: profile._id,
+        type,
+      },
+    });
   };
+
 
   return (
     <div className={styles.wrap}>
@@ -188,14 +280,14 @@ function People({ app, form, dispatch, people }) {
             style={{ backgroundColor: '#f7f7f7', fontWeight: '400' }}
           >
             {/* <Menu.Item style={{ fontSize: '16px' }}>{isSelf ? '我' : 'TA'}的主页</Menu.Item>*/}
-            <Menu.Item style={{ fontSize: '16px' }}>{isSelf ? '我' : 'TA'}的提问</Menu.Item>
-            <Menu.Item style={{ fontSize: '16px' }}>{isSelf ? '我' : 'TA'}的回答</Menu.Item>
-            <Menu.Item style={{ fontSize: '16px' }}>{isSelf ? '我' : 'TA'}关注的人</Menu.Item>
-            <Menu.Item style={{ fontSize: '16px' }}>{isSelf ? '我' : 'TA'}的粉丝</Menu.Item>
+            <Menu.Item style={{ fontSize: '16px' }}><div onClick={handleChangeType.bind(null, 'question')}>{isSelf ? '我' : 'TA'}的提问</div></Menu.Item>
+            <Menu.Item style={{ fontSize: '16px' }}><div onClick={handleChangeType.bind(null, 'answer')}>{isSelf ? '我' : 'TA'}的回答</div></Menu.Item>
+            <Menu.Item style={{ fontSize: '16px' }}><div onClick={handleChangeType.bind(null, 'follow')}>{isSelf ? '我' : 'TA'}关注的人</div></Menu.Item>
+            <Menu.Item style={{ fontSize: '16px' }}><div onClick={handleChangeType.bind(null, 'fans')}>{isSelf ? '我' : 'TA'}的粉丝</div></Menu.Item>
           </Menu>
         </Col>
         <Col span={18} className={styles.right}>
-          <h2 className={styles.right_title}>{currentTitle}</h2>
+          <h2 className={styles.right_title}>{getCurrentTitle(current_type)}</h2>
           {getMain()}
         </Col>
       </Row>
@@ -205,6 +297,13 @@ function People({ app, form, dispatch, people }) {
 
 function mapStateToProps({ app, people }) {
   return { app, people };
+}
+
+function getAddKeyArray(array) {
+  return array.map((item) => {
+    item.key = item._id;
+    return item;
+  });
 }
 
 export default connect(mapStateToProps)(Form.create()(People));

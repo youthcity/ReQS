@@ -22,3 +22,26 @@ export async function getUserInfoById(id) {
     method: 'get',
   });
 }
+
+export async function getLogsByUserId(params) {
+  return request({
+    url: `/user/${params.id}/logs?type=${params.type}`,
+    method: 'get',
+  });
+}
+
+export async function addFollow(id) {
+  return request({
+    url: `/user/${id}/follow`,
+    method: 'get',
+    withCredentials: true,
+  });
+}
+
+export async function addFavorite(questionId) {
+  return request({
+    url: `/user/${questionId}/favorite`,
+    method: 'get',
+    withCredentials: true,
+  });
+}

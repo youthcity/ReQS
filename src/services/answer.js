@@ -17,3 +17,19 @@ export async function addComment(params) {
     withCredentials: true,
   });
 }
+
+export async function addThanks(id) {
+  return request({
+    url: `/answer/${id}/thanks`,
+    method: 'get',
+    withCredentials: true,
+  });
+}
+
+export async function voteAnswer(params) {
+  return request({
+    url: `/answer/${params.id}/voteAnswer?type=${params.type}`,
+    method: 'get',
+    withCredentials: true,
+  });
+}

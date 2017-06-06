@@ -2,9 +2,9 @@ import pathToRegexp from 'path-to-regexp';
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
 
-import { getQuestion } from '../services/question';
-import { addAnswer, addComment } from '../services/answer';
-
+import { getQuestion, addLike } from '../services/question';
+import { addAnswer, addComment, addThanks, voteAnswer } from '../services/answer';
+import { addFavorite, addFollow } from '../services/user';
 
 const question = {
   author: { _id: 11111, username: 'youthcity' },
@@ -76,10 +76,42 @@ export default {
       }
     },
     *submitComment({ payload }, { put, call }) {
-      console.log('==payload=', payload);
       const data = yield call(addComment, payload);
       if (data.success) {
         message.success('添加评论成功');
+      }
+    },
+    *addThanks({ payload }, { put, call }) {
+      const data = yield call(addThanks, payload);
+      if (data.success) {
+        message.success('感谢成功');
+      }
+    },
+    *addFavorite({ payload }, { put, call }) {
+      const data = yield call(addFavorite, payload);
+      if (data.success) {
+        message.success('收藏成功');
+      }
+    },
+    *addLike({ payload }, { put, call }) {
+      const data = yield call(addLike, payload);
+      if (data.success) {
+        yield put({ type: 'handleLike' });
+        message.success('点赞成功~');
+      }
+    },
+    *addFollow({ payload }, { put, call }) {
+      const data = yield call(addFollow, payload);
+      if (data.success) {
+        message.success('已经添加到你的关注列表');
+      }
+    },
+    *voteAnswer({ payload }, { put, call }) {
+      const data = yield call(voteAnswer, payload);
+      if (data.success) {
+        message.success('投票成功~');
+      } else {
+        message.error('投票失败');
       }
     },
   },

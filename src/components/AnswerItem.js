@@ -15,7 +15,7 @@ class AnswerItem extends React.Component {
       up_active: false,   // 赞同
       down_active: false, // 反对
       voteup_count,
-      is_like: false,
+      is_thank: false,
       comment_content: '',
       is_comments_visible: false,
     };
@@ -37,6 +37,7 @@ class AnswerItem extends React.Component {
                   ? this.state.voteup_count + 1
                   : this.state.voteup_count - 1,
     });
+    this.props.voteAnswer(this.props.answer._id, 'vote_up');
   }
 
   handleHate() {
@@ -47,10 +48,17 @@ class AnswerItem extends React.Component {
                     ? this.state.voteup_count - 1
                     : this.state.voteup_count + 1,
     });
+    this.props.voteAnswer(this.props.answer._id, 'vote_down');
   }
-  handleCommentLike() {
+
+  handleCommentThank() {
+    if (!this.state.is_thank) {
+      this.props.addThanks(this.props.answer._id);
+    } else {
+      console.log('==removeThank==');
+    }
     this.setState({
-      is_like: !this.state.is_like,
+      is_thank: !this.state.is_thank,
     });
   }
 
@@ -104,8 +112,8 @@ class AnswerItem extends React.Component {
               <li>{moment(answer.creationDate).fromNow()}回答</li>
               <li><a href="javascript:;" onClick={this.handleCommentShow.bind(this)}>{answer.comment.length} 评论</a></li>
               <li>
-                <a onClick={this.handleCommentLike.bind(this)} className={cx(styles.like_heart, { [styles.like_active]: this.state.is_like })}>
-                  <Icon type="heart" /> 喜欢
+                <a onClick={this.handleCommentThank.bind(this)} className={cx(styles.like_heart, { [styles.like_active]: this.state.is_thank })}>
+                  <Icon type="heart" /> 感谢
                 </a>
               </li>
             </ul>

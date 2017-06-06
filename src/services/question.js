@@ -23,3 +23,11 @@ export async function getQuestionList(params) {
     method: 'get',
   });
 }
+
+export async function addLike(id) {
+  return request({
+    url: `/question/${id}/likes`,
+    method: 'get',
+    withCredentials: true,
+  });
+}
