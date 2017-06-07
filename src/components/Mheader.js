@@ -68,7 +68,7 @@ function Mheader({ location, dispatch, app,
             <Menu.Item key="1"><Link to="/">首页</Link></Menu.Item>
             <Menu.Item key="2"><Link to="/topic">问答</Link></Menu.Item>
             <Menu.Item key="3"><Link to="/news">头条</Link></Menu.Item>
-            <Menu.Item key="4"><Link to="/category?id=100">招聘</Link></Menu.Item>
+            <Menu.Item key="4"><Link to="/jobs">招聘</Link></Menu.Item>
             {/* <Menu.Item key="5"><Link to="/category?id=200">Wiki</Link></Menu.Item>*/}
             {/* <Menu.Item key="6"><Link to="/about">关于我们</Link></Menu.Item>*/}
           </Menu>

@@ -18,7 +18,7 @@ import Search from './routes/Search.js';
 
 import News from './routes/News.js';
 
-import Jobs from "./routes/Jobs.js";
+import Jobs from './routes/Jobs.js';
 
 function RouterConfig({ history }) {
   return (
@@ -32,8 +32,8 @@ function RouterConfig({ history }) {
         <Route path="/topic" component={Topic} />
         <Route path="/search" component={Search} />
         <Route path="/news" component={News} />
+        <Route path="/jobs" component={Jobs} />
       </Route>
-      <Route path="/jobs" component={Jobs} />
     </Router>
   );
 }

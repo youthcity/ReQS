@@ -3,10 +3,10 @@ import { message } from 'antd';
 import { getQuestionList } from '../services/question';
 
 export default {
-  namespace: 'news',
+  namespace: 'jobs',
   state: {
     questionList: [],
-    title: 'ReQS热门头条',
+    topic: '招聘',
   },
   reducers: {
     fetchListSuccess(state, { payload }) {
@@ -27,8 +27,8 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname.indexOf('news') > 0) {
-          dispatch({ type: 'fetchList', payload: 'excellent' });
+        if (location.pathname.indexOf('jobs') > 0) {
+          dispatch({ type: 'fetchList', payload: 'jobs' });
         }
       });
     },

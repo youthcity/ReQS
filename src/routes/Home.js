@@ -97,7 +97,7 @@ function Home({ dispatch, app }) {
           </a>
         </Col>
         <Col span="6">
-          <a href="/jobs">
+          <Link to="/jobs">
             <Card bordered={false} bodyStyle={{ padding: 0 }}>
               <div className={styles.card_icon}>
                 <Icon className={styles.icon} style={{ color: '#03A9F4' }} type="team" />
@@ -107,10 +107,10 @@ function Home({ dispatch, app }) {
                 <Icon type="arrow-right" style={{ fontSize: '16px' }} />
               </div>
             </Card>
-          </a>
+          </Link>
         </Col>
         <Col span="6">
-          <Link to="/topic?type=excellent">
+          <Link to="/news">
             <Card bordered={false} bodyStyle={{ padding: 0 }}>
               <div className={styles.card_icon}>
                 <Icon className={styles.icon} style={{ color: '#009688' }} type="smile-o" />
