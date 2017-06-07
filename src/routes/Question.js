@@ -144,6 +144,11 @@ function Question({ q, dispatch }) {
     });
   };
 
+  const isJobs = question.tags.some((item) => {
+    return item.tagName === '招聘';
+  });
+
+
   return (
     <div className={styles.wrap}>
       <Row gutter={24}>
@@ -151,15 +156,15 @@ function Question({ q, dispatch }) {
           <div className={styles.question_wrap}>
             <div className={styles.panel_heading}>
               <h1 className={styles.question_title}>
-                <span className={styles.label_question}>问</span>
+                <span className={styles.label_question}>{isJobs ? '招' : '问'}</span>
                 {question.title}
               </h1>
               <div className={styles.tags_wrap}>
                 {getTags()}
                 <div className={styles.question_author}>
                   <a className={styles.mr5} href={`/people/${question.author._id}`}>{question.author.username}</a>
-                  &#x3000;{moment(question.creationDate).fromNow()} 提问
-              </div>
+                  &#x3000;{moment(question.creationDate).fromNow()} {isJobs ? '发布' : '提问'}
+                </div>
               </div>
 
             </div>
@@ -184,7 +189,7 @@ function Question({ q, dispatch }) {
             <Card
               bodyStyle={{ padding: '15px' }}
               className={styles.replies_wrap}
-              title={`共收到 ${answers.length} 条回答`}
+              title={`共收到 ${answers.length} 条${isJobs ? '回复' : '回答'}`}
               extra={<ButtonGroup>
                 <Button onClick={handleFetchAnswerListByType.bind(null, 'default')} disabled={currentAnswerListOrder === 'default'}>默认排序</Button>
                 <Button onClick={handleFetchAnswerListByType.bind(null, 'time')} disabled={currentAnswerListOrder === 'time'}>时间排序</Button>
@@ -239,7 +244,7 @@ function Question({ q, dispatch }) {
                 <a href="http://www.jiathis.com/share" className="jiathis jiathis_txt jtico jtico_jiathis" target="_blank" />
               </div>
             </div>
-            <h4 className={styles.relpy_title}>共收到&nbsp;{answers.length}&nbsp;条回答</h4>
+            <h4 className={styles.relpy_title}>共收到&nbsp;{answers.length}&nbsp;条{isJobs ? '回复' : '回答'}</h4>
             <h4 className={styles.relpy_title}>{question.pv}&nbsp;次阅读</h4>
           </Card>
         </Col>

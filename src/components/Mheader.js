@@ -23,7 +23,7 @@ function Mheader({ location, dispatch, app,
   const dropdownMenu = (
     <Menu onClick={() => { console.log('dropdownMenu'); }}>
       <Menu.Item key="1"><Link to="/ask">提问</Link></Menu.Item>
-      <Menu.Item key="2">发布招聘</Menu.Item>
+      <Menu.Item key="2"><Link to="/ask?type=jobs">发布招聘</Link></Menu.Item>
     </Menu>
   );
 

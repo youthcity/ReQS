@@ -8,12 +8,25 @@ export default {
   namespace: 'ask',
   state: {
     tags: [],
+    isAskJobs: false,
   },
   reducers: {
     handleTags(state, { payload: tags }) {
       return {
         ...state,
         tags,
+      };
+    },
+    handleSetAskJobsTrue(state) {
+      return {
+        ...state,
+        isAskJobs: true,
+      };
+    },
+    handleSetAskJobsFalse(state) {
+      return {
+        ...state,
+        isAskJobs: false,
       };
     },
   },
@@ -35,8 +48,19 @@ export default {
     },
   },
   subscriptions: {
-    setup({ dispatch }) {
+    setup({ dispatch, history }) {
       dispatch({ type: 'fetchTags' });
+      history.listen((location) => {
+        dispatch({
+          type: 'handleSetAskJobsFalse',
+        });
+        const { type } = location.query;
+        if (type) {
+          dispatch({
+            type: 'handleSetAskJobsTrue',
+          });
+        }
+      });
     },
   },
 };

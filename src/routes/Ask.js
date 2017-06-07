@@ -9,7 +9,7 @@ const Option = Select.Option;
 const FormItem = Form.Item;
 
 function Ask({ form, ask, dispatch }) {
-  const { tags } = ask;
+  const { tags, isAskJobs } = ask;
   const { getFieldDecorator, validateFieldsAndScroll } = form;
 
   let editorContent = '';
@@ -17,18 +17,16 @@ function Ask({ form, ask, dispatch }) {
     e.preventDefault();
     validateFieldsAndScroll((errors, values) => {
       if (errors) {
-        console.log(errors);
-        console.log(values);
         return;
       }
-
       if (editorContent) {
+        const tagsArray = isAskJobs ? ['59324a0fe166343173563961'] : values.tags;
         dispatch({
           type: 'ask/addQuestion',
           payload: {
             content: editorContent,
             title: values.title,
-            tags: values.tags,
+            tags: tagsArray,  //when jobs ["59324a0fe166343173563961"]
           },
         });
       }
@@ -60,6 +58,9 @@ function Ask({ form, ask, dispatch }) {
     QINIU_DOMAIN_FILE_URL: 'http://opbc041f6.bkt.clouddn.com/', //其他文件地址前缀
   };
 
+  const titleTips = isAskJobs ? '请简要描述招聘要求和职位'
+    : '标题：一句话说清问题，用问号结尾';
+
   return (
     <div className={styles.wrap}>
       <Form
@@ -69,26 +70,30 @@ function Ask({ form, ask, dispatch }) {
           {getFieldDecorator('title', {
             rules: [{ required: true, message: '请输入标题!', whitespace: true }],
           })(
-            <Input className={styles.input_style} placeholder="标题：一句话说清问题，用问号结尾" />,
+            <Input className={styles.input_style} placeholder={titleTips} />,
           )}
         </FormItem>
-        <FormItem >
-          {getFieldDecorator('tags', {
-            rules: [{ required: true, message: '请输入标签!' }],
-          })(
-            <Select
-              size="large"
-              mode="multiple"
-              style={{ width: '100%' }}
-              searchPlaceholder="标签模式"
-              onChange={handleChange}
-              optionFilterProp="children"
-              placeholder="标签，如：react 可使用回车自动分隔"
-            >
-              {selectOption()}
-            </Select>,
+        {
+          isAskJobs ? <div />
+          :
+          <FormItem>
+            {getFieldDecorator('tags', {
+              rules: [{ required: true, message: '请输入标签!' }],
+            })(
+              <Select
+                size="large"
+                mode="multiple"
+                style={{ width: '100%' }}
+                searchPlaceholder="标签模式"
+                onChange={handleChange}
+                optionFilterProp="children"
+                placeholder="标签，如：react 可使用回车自动分隔"
+              >
+                {selectOption()}
+              </Select>,
           )}
-        </FormItem>
+          </FormItem>
+        }
         <FormItem >
           <LzEditor
             active
