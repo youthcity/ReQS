@@ -131,7 +131,7 @@ function Home({ dispatch, app }) {
           {getTopicItems()}
         </div>
         <div className={styles.panel_footer}>
-          <a href="/topic?type=excellent">查看更多精华帖...</a>
+          <a href="/topic?type=excellent">查看更多优质问答...</a>
         </div>
       </div>
     </div>

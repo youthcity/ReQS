@@ -24,7 +24,7 @@ function Topic({ topic, dispatch }) {
         <Card bodyStyle={{ padding: '10px' }}>
           <ul className={styles.nav_list}>
             <li><a onClick={handleFetchData.bind(null, 'default')} className={cx({ [styles.active]: currentType === 'default' })} href="javascript:;">默认</a></li>
-            <li><a onClick={handleFetchData.bind(null, 'excellent')} className={cx({ [styles.active]: currentType === 'excellent' })} href="javascript:;"><Icon type="smile-o" />&nbsp;优质帖子</a></li>
+            <li><a onClick={handleFetchData.bind(null, 'excellent')} className={cx({ [styles.active]: currentType === 'excellent' })} href="javascript:;"><Icon type="smile-o" />&nbsp;优质问答</a></li>
             <li><a onClick={handleFetchData.bind(null, 'no_reply')} className={cx({ [styles.active]: currentType === 'no_reply' })} href="javascript:;">无人问津</a></li>
             <li><a onClick={handleFetchData.bind(null, 'recent')} className={cx({ [styles.active]: currentType === 'recent' })} href="javascript:;">最新发布</a></li>
           </ul>
