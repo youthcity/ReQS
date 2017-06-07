@@ -2,7 +2,7 @@ import pathToRegexp from 'path-to-regexp';
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
 
-import { getQuestion, addLike } from '../services/question';
+import { getQuestion, addLike, getAnswerListByTime } from '../services/question';
 import { addAnswer, addComment, addThanks, voteAnswer } from '../services/answer';
 import { addFavorite, addFollow } from '../services/user';
 
@@ -25,6 +25,9 @@ export default {
     isLike: false,
     question,
     answers: [],
+    editorContent: '',
+    isEditorVisible: true,
+    currentAnswerListOrder: 'default',
   },
   reducers: {
     handleLike(state) {
@@ -51,6 +54,36 @@ export default {
         answers: payload,
       };
     },
+    handleClear(state) {
+      return {
+        ...state,
+        editorContent: ' ',
+      };
+    },
+    hideEditor(state) {
+      return {
+        ...state,
+        isEditorVisible: false,
+      };
+    },
+    showEditor(state) {
+      return {
+        ...state,
+        isEditorVisible: true,
+      };
+    },
+    handleChangeCurrentAnswerListOrder(state, { payload }) {
+      return {
+        ...state,
+        currentAnswerListOrder: payload,
+      };
+    },
+    handleChangeAnswers(state, { payload }) {
+      return {
+        ...state,
+        answers: payload,
+      };
+    },
   },
   effects: {
     *fetchQuestion({ payload }, { put, call }) {
@@ -69,9 +102,25 @@ export default {
         message.error('服务器君找不到该问题了~~', 2);
       }
     },
-    *submitAnswer({ payload }, { put, call }) {
+    *submitAnswer({ payload }, { put, call, select }) {
       const data = yield call(addAnswer, payload);
+      const questionId = yield select(state => state.q.question._id);
+
       if (data.success) {
+        // 刷新状态
+        // yield put({ type: 'handleClear' });
+        yield put({ type: 'hideEditor' });
+        // yield put({
+        //   type: 'fetchQuestion',
+        //   payload: questionId,
+        // });
+        yield put({ type: 'showEditor' });
+        yield put({ type: 'fetchAnswerListByType',
+          payload: {
+            id: questionId,
+            type: 'time',
+          } });
+        window.scrollTo(0, 0);
         message.success('添加答案成功!');
       }
     },
@@ -114,6 +163,17 @@ export default {
         message.error('投票失败');
       }
     },
+    *fetchAnswerListByType({ payload }, { put, call }) {
+      console.log(payload);
+      const data = yield call(getAnswerListByTime, payload);
+      if (data.success) {
+        yield put({ type: 'handleChangeCurrentAnswerListOrder', payload: payload.type });
+        yield put({ type: 'handleChangeAnswers', payload: data.result });
+        message.success('列表获取成功');
+      } else {
+        message.success('获取失败');
+      }
+    },
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -121,10 +181,10 @@ export default {
         if (location.pathname.indexOf('question') > 0) {
           const match = pathToRegexp('/question/:id').exec(location.pathname);
           if (match) {
-            const userId = match[1];
+            const questionId = match[1];
             dispatch({
               type: 'fetchQuestion',
-              payload: userId,
+              payload: questionId,
             });
           } else {
             message.error('老大！没有拿到问题ID呢~~');

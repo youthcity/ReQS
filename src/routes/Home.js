@@ -71,7 +71,7 @@ function Home({ dispatch, app }) {
       }
       <Row gutter={16} className={styles.card_panel}>
         <Col span="6">
-          <a href="/topics">
+          <Link to="/topic">
             <Card bordered={false} bodyStyle={{ padding: 0 }}>
               <div className={styles.card_icon}>
                 <Icon className={styles.icon} style={{ color: '#7E57C2' }} type="appstore-o" />
@@ -81,7 +81,7 @@ function Home({ dispatch, app }) {
                 <Icon type="arrow-right" style={{ fontSize: '16px' }} />
               </div>
             </Card>
-          </a>
+          </Link>
         </Col>
         <Col span="6">
           <a href="/wiki">

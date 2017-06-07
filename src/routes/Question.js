@@ -14,7 +14,7 @@ moment.locale('zh-CN');
 const ButtonGroup = Button.Group;
 
 function Question({ q, dispatch }) {
-  const { isLike, question, answers } = q;
+  const { isLike, question, answers, editorContent, isEditorVisible, currentAnswerListOrder } = q;
   const handleLike = () => {
     if (!isLike) {
       dispatch({
@@ -104,7 +104,6 @@ function Question({ q, dispatch }) {
     });
   };
 
-
   const uploadConfig = {
     QINIU_URL: 'http://up-z2.qiniu.com', // 上传地址，现在暂只支持七牛上传
     QINIU_IMG_TOKEN_URL: 'http://localhost:3000/upload', // 请求图片的token
@@ -131,6 +130,17 @@ function Question({ q, dispatch }) {
     dispatch({
       type: 'q/addFollow',
       payload: question.author._id,
+    });
+  };
+
+  const handleFetchAnswerListByType = (type) => {
+    console.log(type);
+    dispatch({
+      type: 'q/fetchAnswerListByType',
+      payload: {
+        id: question._id,
+        type,
+      },
     });
   };
 
@@ -176,8 +186,8 @@ function Question({ q, dispatch }) {
               className={styles.replies_wrap}
               title={`共收到 ${answers.length} 条回答`}
               extra={<ButtonGroup>
-                <Button disabled>默认排序</Button>
-                <Button>时间排序</Button>
+                <Button onClick={handleFetchAnswerListByType.bind(null, 'default')} disabled={currentAnswerListOrder === 'default'}>默认排序</Button>
+                <Button onClick={handleFetchAnswerListByType.bind(null, 'time')} disabled={currentAnswerListOrder === 'time'}>时间排序</Button>
               </ButtonGroup>
                     }
             >
@@ -186,15 +196,20 @@ function Question({ q, dispatch }) {
           </div>
           <Card className={styles.answer_editor} title="撰写答案">
             <div className={styles.editor_wrap}>
-              <LzEditor
-                active
-                importContent={answerContent}
-                cbReceiver={receiveHtml}
-                uploadConfig={uploadConfig}
-                fullScreen={false}
-                color={false}
-                convertFormat="html"
-              />
+              {
+              isEditorVisible ?
+                <LzEditor
+                  active
+                  importContent={editorContent}
+                  cbReceiver={receiveHtml}
+                  uploadConfig={uploadConfig}
+                  fullScreen
+                  color={false}
+                  convertFormat="html"
+                />
+              :
+                <div />
+            }
             </div>
             <div className={styles.btn_wrap}>
               <Button onClick={handleSubmitAnswer} className={styles.submit_btn} type="primary" size="large" >提交答案</Button>

@@ -1,4 +1,5 @@
 import { message } from 'antd';
+import { routerRedux } from 'dva/router';
 
 import { getTags } from '../services/tags';
 import { addQuestion } from '../services/question';
@@ -28,6 +29,7 @@ export default {
     *addQuestion({ payload }, { put, call }) {
       const data = yield call(addQuestion, payload);
       if (data.success) {
+        yield put(routerRedux.push(`/question/${data.result._id}`));
         message.success('提问成功~');
       }
     },

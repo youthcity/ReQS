@@ -31,3 +31,10 @@ export async function addLike(id) {
     withCredentials: true,
   });
 }
+
+export async function getAnswerListByTime(params) {
+  return request({
+    url: `/question/${params.id}/AnswerList?type=${params.type}`,
+    method: 'get',
+  });
+}
