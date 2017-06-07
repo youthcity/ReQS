@@ -38,3 +38,10 @@ export async function getAnswerListByTime(params) {
     method: 'get',
   });
 }
+
+export async function searchQuestion(keyWord) {
+  return request({
+    url: `/search?q=${keyWord}`,
+    method: 'get',
+  });
+}

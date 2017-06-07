@@ -14,6 +14,8 @@ import Question from './routes/Question.js';
 
 import Topic from './routes/Topic.js';
 
+import Search from './routes/Search.js';
+
 function RouterConfig({ history }) {
   return (
     <Router history={history}>
@@ -24,6 +26,7 @@ function RouterConfig({ history }) {
         <Route path="/people/:id" component={People} />
         <Route path="/question/:id" component={Question} />
         <Route path="/topic" component={Topic} />
+        <Route path="/search" component={Search} />
       </Route>
     </Router>
   );

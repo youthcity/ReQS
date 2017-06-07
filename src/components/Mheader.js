@@ -44,6 +44,16 @@ function Mheader({ location, dispatch, app,
     </Menu>
   );
 
+  const handleSearch = (value) => {
+    if (!value) {
+      return;
+    }
+    dispatch({
+      type: 'app/searchQuestion',
+      payload: value,
+    });
+  };
+
   return (
     <Header className={styles.header_wrap}>
       <div className={styles.container}>
@@ -73,7 +83,7 @@ function Mheader({ location, dispatch, app,
                       placeholder="input search text"
                       style={{ width: 150 }}
                       size="large"
-                      onSearch={value => console.log(value)}
+                      onSearch={handleSearch}
                     />
                   </li>
                   <li className={styles.item}>

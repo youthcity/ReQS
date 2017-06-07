@@ -1,4 +1,6 @@
 import { message } from 'antd';
+import { routerRedux } from 'dva/router';
+
 import { login, logout, getUserInfo } from '../services/app';
 
 export default {
@@ -91,6 +93,11 @@ export default {
           type: 'queryUserSuccess',
           payload: data.user,
         });
+      }
+    },
+    *searchQuestion({ payload }, { call, put }) {
+      if (payload) {
+        yield put(routerRedux.push(`/search?q=${payload}`));
       }
     },
   },
