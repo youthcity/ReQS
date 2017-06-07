@@ -55,7 +55,7 @@ class AnswerItem extends React.Component {
     if (!this.state.is_thank) {
       this.props.addThanks(this.props.answer._id);
     } else {
-      console.log('==removeThank==');
+      message.success('已取消感谢');
     }
     this.setState({
       is_thank: !this.state.is_thank,
@@ -74,11 +74,18 @@ class AnswerItem extends React.Component {
       return;
     }
     this.props.submitCommet(this.props.answer._id, this.state.comment_content);
+    this.handleClearInput();
   }
 
   handleCommentShow() {
     this.setState({
       is_comments_visible: !this.state.is_comments_visible,
+    });
+  }
+
+  handleClearInput() {
+    this.setState({
+      comment_content: '',
     });
   }
 

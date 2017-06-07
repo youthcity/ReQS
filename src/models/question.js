@@ -124,9 +124,16 @@ export default {
         message.success('添加答案成功!');
       }
     },
-    *submitComment({ payload }, { put, call }) {
+    *submitComment({ payload }, { put, call, select }) {
       const data = yield call(addComment, payload);
       if (data.success) {
+        const questionId = yield select(state => state.q.question._id);
+        const type = yield select(state => state.q.currentAnswerListOrder);
+        yield put({ type: 'fetchAnswerListByType',
+          payload: {
+            id: questionId,
+            type,
+          } });
         message.success('添加评论成功');
       }
     },
@@ -142,9 +149,11 @@ export default {
         message.success('收藏成功');
       }
     },
-    *addLike({ payload }, { put, call }) {
+    *addLike({ payload }, { put, call, select }) {
       const data = yield call(addLike, payload);
       if (data.success) {
+        const questionId = yield select(state => state.q.question._id);
+        yield put({ type: 'fetchQuestion', payload: questionId });
         yield put({ type: 'handleLike' });
         message.success('点赞成功~');
       }
@@ -169,7 +178,6 @@ export default {
       if (data.success) {
         yield put({ type: 'handleChangeCurrentAnswerListOrder', payload: payload.type });
         yield put({ type: 'handleChangeAnswers', payload: data.result });
-        message.success('列表获取成功');
       } else {
         message.success('获取失败');
       }
