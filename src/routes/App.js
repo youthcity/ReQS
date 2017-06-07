@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Layout, Form } from 'antd';
+import { Layout, Form, BackTop } from 'antd';
 
 
 import styles from './App.less';
@@ -51,6 +51,9 @@ function App({ children, form, app, dispatch, location }) {
 
   return (
     <Layout className={styles.layout}>
+      <BackTop>
+        <div className={styles.back_top}>UP</div>
+      </BackTop>
       <Mheader
         {...headerProps}
       />
@@ -59,7 +62,7 @@ function App({ children, form, app, dispatch, location }) {
       </Content>
       <Footer style={{ textAlign: 'center' }}>
             Copyright ©2017 Created by youthcity
-    </Footer>
+      </Footer>
     </Layout>
   );
 }
