@@ -16,6 +16,10 @@ import Topic from './routes/Topic.js';
 
 import Search from './routes/Search.js';
 
+import News from './routes/News.js';
+
+import Jobs from "./routes/Jobs.js";
+
 function RouterConfig({ history }) {
   return (
     <Router history={history}>
@@ -27,7 +31,9 @@ function RouterConfig({ history }) {
         <Route path="/question/:id" component={Question} />
         <Route path="/topic" component={Topic} />
         <Route path="/search" component={Search} />
+        <Route path="/news" component={News} />
       </Route>
+      <Route path="/jobs" component={Jobs} />
     </Router>
   );
 }

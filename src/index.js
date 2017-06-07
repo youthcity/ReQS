@@ -17,6 +17,8 @@ const app = dva({
 
 app.model(require('./models/app'));
 
+app.model(require("./models/news"));
+
 app.model(require("./models/search"));
 
 app.model(require("./models/topic"));
