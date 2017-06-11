@@ -84,7 +84,7 @@ function Home({ dispatch, app }) {
           </Link>
         </Col>
         <Col span="6">
-          <a href="/wiki">
+          <Link to="/wiki">
             <Card bordered={false} bodyStyle={{ padding: 0 }}>
               <div className={styles.card_icon}>
                 <Icon className={styles.icon} style={{ color: '#9CCC65' }} type="gift" />
@@ -94,7 +94,7 @@ function Home({ dispatch, app }) {
                 <Icon type="arrow-right" style={{ fontSize: '16px' }} />
               </div>
             </Card>
-          </a>
+          </Link>
         </Col>
         <Col span="6">
           <Link to="/jobs">
@@ -131,7 +131,7 @@ function Home({ dispatch, app }) {
           {getTopicItems()}
         </div>
         <div className={styles.panel_footer}>
-          <a href="/topic?type=excellent">查看更多优质问答...</a>
+          <Link href="/topic?type=excellent">查看更多优质问答...</Link>
         </div>
       </div>
     </div>

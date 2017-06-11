@@ -20,6 +20,8 @@ import News from './routes/News.js';
 
 import Jobs from './routes/Jobs.js';
 
+import Wiki from './routes/Wiki.js';
+
 function RouterConfig({ history }) {
   return (
     <Router history={history}>
@@ -33,6 +35,7 @@ function RouterConfig({ history }) {
         <Route path="/search" component={Search} />
         <Route path="/news" component={News} />
         <Route path="/jobs" component={Jobs} />
+        <Route path="/wiki" component={Wiki} />
       </Route>
     </Router>
   );

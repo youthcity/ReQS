@@ -69,8 +69,8 @@ function Mheader({ location, dispatch, app,
             <Menu.Item key="2"><Link to="/topic">问答</Link></Menu.Item>
             <Menu.Item key="3"><Link to="/news">头条</Link></Menu.Item>
             <Menu.Item key="4"><Link to="/jobs">招聘</Link></Menu.Item>
+            <Menu.Item key="5"><Link to="/wiki">Wiki</Link></Menu.Item>
             {/* <Menu.Item key="5"><Link to="/category?id=200">Wiki</Link></Menu.Item>*/}
-            {/* <Menu.Item key="6"><Link to="/about">关于我们</Link></Menu.Item>*/}
           </Menu>
         </div>
         <div className={styles.right}>
@@ -94,7 +94,7 @@ function Mheader({ location, dispatch, app,
                     </Dropdown>
                   </li>
                   <li className={styles.item}>
-                    <Link to="/notifications" ><Icon className={styles.icon} type="bell" /></Link>
+                    {/* <Link to="/notifications" ><Icon className={styles.icon} type="bell" /></Link>*/}
                   </li>
                   <li className={styles.item}>
                     <Dropdown overlay={userDropMenu}>
