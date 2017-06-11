@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 axios.defaults.timeout = 5000;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = 'http://120.77.34.58:3000';
 
 const fetch = (options) => {
   const {
