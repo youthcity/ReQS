@@ -23,7 +23,6 @@ export default {
   },
   effects: {
     *signin({ payload }, { put, call }) {
-      console.log(payload);
       yield put({ type: 'showRegisterLoading' });
       const data = yield call(signup, payload);
       if (data.success) {

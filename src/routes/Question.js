@@ -88,7 +88,6 @@ function Question({ q, dispatch }) {
   let answerContent = '';
   const receiveHtml = (content) => {
     answerContent = content;
-    console.log('Recieved content', content);
   };
   const handleSubmitAnswer = () => {
     if (answerContent.length < 15) {
@@ -114,7 +113,7 @@ function Question({ q, dispatch }) {
     QINIU_FILE_TOKEN_URL: 'http://www.yourServerAddress.mobi/getUptokenOfQiniu.do?name=patch', // 其他资源的token的获取
     QINIU_IMG_DOMAIN_URL: 'http://opbc041f6.bkt.clouddn.com', // 图片文件地址的前缀
     QINIU_DOMAIN_VIDEO_URL: 'http://opbc041f6.bkt.clouddn.com/', // 视频文件地址的前缀
-    QINIU_DOMAIN_FILE_URL: 'http://opbc041f6.bkt.clouddn.com/', //其他文件地址前缀
+    QINIU_DOMAIN_FILE_URL: 'http://opbc041f6.bkt.clouddn.com/', // 其他文件地址前缀
   };
 
   const handleFavorite = () => {
@@ -125,8 +124,6 @@ function Question({ q, dispatch }) {
   };
 
   const handleFollow = () => {
-    console.log('==question====', question.author._id);
-
     dispatch({
       type: 'q/addFollow',
       payload: question.author._id,
@@ -134,7 +131,6 @@ function Question({ q, dispatch }) {
   };
 
   const handleFetchAnswerListByType = (type) => {
-    console.log(type);
     dispatch({
       type: 'q/fetchAnswerListByType',
       payload: {

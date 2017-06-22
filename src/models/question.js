@@ -173,7 +173,6 @@ export default {
       }
     },
     *fetchAnswerListByType({ payload }, { put, call }) {
-      console.log(payload);
       const data = yield call(getAnswerListByTime, payload);
       if (data.success) {
         yield put({ type: 'handleChangeCurrentAnswerListOrder', payload: payload.type });
