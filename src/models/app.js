@@ -87,7 +87,6 @@ export default {
     },
     *queryUser({ payload }, { call, put }) {
       const data = yield call(getUserInfo, payload);
-      console.log(data);
       if (data.success && data.user) {
         yield put({
           type: 'queryUserSuccess',

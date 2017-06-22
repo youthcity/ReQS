@@ -94,7 +94,7 @@ function Mheader({ location, dispatch, app,
                     </Dropdown>
                   </li>
                   <li className={styles.item}>
-                    {/* <Link to="/notifications" ><Icon className={styles.icon} type="bell" /></Link>*/}
+                    <Link to="/notifications" ><Icon className={styles.icon} type="bell" /></Link>
                   </li>
                   <li className={styles.item}>
                     <Dropdown overlay={userDropMenu}>

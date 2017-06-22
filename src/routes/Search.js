@@ -7,7 +7,6 @@ import ListItem from '../components/ListItem';
 
 function Search({ search, location }) {
   const { questionList } = search;
-  console.log(location);
   const query = location.query && location.query.q;
   const title = `关于 “${query}” 的搜索结果, 共 ${questionList.length} 条`;
   const isNoResult = questionList.length === 0;

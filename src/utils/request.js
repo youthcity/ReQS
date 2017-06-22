@@ -16,7 +16,6 @@ const fetch = (options) => {
 
   switch (method.toLowerCase()) {
     case 'get':
-      console.log(withCredentials);
       return axios.get(`${url}${!_.isEmpty(data) ? `?${qs.stringify(data)}` : ''}`, {
         withCredentials,
       });
@@ -37,7 +36,6 @@ const fetch = (options) => {
 
 export default function request(options) {
   return fetch(options).then((response) => {
-    console.log(response);
     const { data, statusText, status } = response;
     return {
       success: true,

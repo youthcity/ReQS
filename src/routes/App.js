@@ -29,7 +29,6 @@ function App({ children, form, app, dispatch, location }) {
         if (errors) {
           return;
         }
-        console.log(values);
         dispatch({
           type: 'app/login',
           payload: values,
@@ -37,7 +36,6 @@ function App({ children, form, app, dispatch, location }) {
       });
     },
     handleCancel() {
-      console.log('Clicked cancel button');
       dispatch({
         type: 'app/hideLoginModal',
       });

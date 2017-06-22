@@ -93,7 +93,6 @@ function People({ app, form, dispatch, people }) {
     dataIndex: 'questionId.title',
     key: 'title',
     render: (text, record, index) => {
-      console.log(record, '+==========');
       return (<Link key={index} to={`/question/${record.questionId && record.questionId._id}`} >{text}</Link>);
     },
   }, {
@@ -155,7 +154,6 @@ function People({ app, form, dispatch, people }) {
       if (errors) {
         return;
       }
-      console.log(values);
       dispatch({
         type: 'people/editUser',
         payload: {
